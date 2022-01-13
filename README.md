@@ -14,7 +14,9 @@ You do not need to continue Expo's setup tutorial beyond the linked Installation
 
 Run the following in the root MaizExchange directory:
 
-```yarn install```
+```
+yarn install
+```
 
 This installs all project dependencies to a folder called `node_modules`. Any time someone else in the repository installs a new package and commits `package.json`, you'll need to rerun this command for it to become installed locally, or else you'll get errors about missing modules when running the app.
 
@@ -22,7 +24,9 @@ This installs all project dependencies to a folder called `node_modules`. Any ti
 
 After completing steps 1 and 2, you've completed the project setup. To build and run the project, enter the following command in the root MaizExchange directory:
 
-```expo start```
+```
+expo start
+```
 
 This should open a tab in your browser showing a set of developer tools. Here you can click on options such as "Run on iOS simulator", "Run in web browser", etc. You can also scan the QR code to open the project in the Expo Go app and use it from your phone, where there are a bunch of helpful developer tools and features such as Hot Reload and element inspection.
 
