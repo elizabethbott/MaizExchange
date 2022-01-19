@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Text, View } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
-import { getGoogleAccountInfo } from '../api';
+import { logInOrSignUp } from '../api';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -14,15 +14,10 @@ const HomeScreen = () => {
         webClientId: '193382220725-r8budtfndiqref86tjqaanm8m2l9k3tf.apps.googleusercontent.com',
     });
 
-    const getUserInfo = async (accessToken) => {
-        const info = await getGoogleAccountInfo(accessToken);
-        console.log(info);
-    };
-
     useEffect(() => {
         if (response?.type === 'success') {
             const { authentication } = response;
-            getUserInfo(authentication.accessToken);
+            logInOrSignUp(authentication.accessToken);
         } else {
             console.log(response);
         }

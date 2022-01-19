@@ -19,17 +19,8 @@ export const testApi = async () => {
     console.log(res);
 };
 
-export const getGoogleAccountInfo = async (accessToken) => {
-    const res = await fetch("https://www.googleapis.com/userinfo/v2/me", {
-        method: 'GET',
-        headers: {
-            "Authorization": "Bearer " + accessToken
-        }
-    });
-    const data = await res.json();
-    return {
-        email: data.email,
-        firstName: data.given_name,
-        lastName: data.family_name
-    }
-};
+export const logInOrSignUp = async (accessToken) => {
+    const res = await request('/auth/logInOrSignUp', { accessToken });
+    if (res.result === "loggedIn") console.log("Logged in - welcome back " + res.firstName + "!");
+    else console.log("Signed up - welcome, " + res.firstName + "!");
+}
