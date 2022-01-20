@@ -1,37 +1,24 @@
 import React, { useEffect } from 'react';
 import { Button, Text, View } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
-import { logInOrSignUp } from '../api';
+import useGoogleLogin from '../hooks/useGoogleLogin';
 
 WebBrowser.maybeCompleteAuthSession();
 
 const HomeScreen = () => {
-    const [request, response, promptAsync] = Google.useAuthRequest({
-        expoClientId: '193382220725-rlqjk76utvargbvr1rrj0vu18o1etsn3.apps.googleusercontent.com',
-        iosClientId: '193382220725-1amcuhiorqamhqcv3g53nmnsdln7n7pe.apps.googleusercontent.com',
-        androidClientId: '193382220725-4s7jc9afsgmuaamf7lfbv36hcc91se91.apps.googleusercontent.com',
-        webClientId: '193382220725-r8budtfndiqref86tjqaanm8m2l9k3tf.apps.googleusercontent.com',
-    });
+    const onLogin = ({ email, firstName, lastName }) => {
+        console.log(email, firstName, lastName);
+    }
 
-    useEffect(() => {
-        if (response?.type === 'success') {
-            const { authentication } = response;
-            logInOrSignUp(authentication.accessToken);
-        } else {
-            console.log(response);
-        }
-    }, [response]);
+    const { isReady, startLogin } = useGoogleLogin(onLogin);
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text>Click button below to login with google:</Text>
             <Button
-                disabled={!request}
+                disabled={!isReady}
                 title="Login"
-                onPress={() => {
-                    promptAsync();
-                }}
+                onPress={startLogin}
             />
         </View>
     );

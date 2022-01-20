@@ -40,7 +40,7 @@ Here's an overview of the project's directory structure:
 
 ```
 .
-├── App.js          # The app's entry point. Imports src/routes to define tab structure
+├── App.js          # The app's entry point. Imports ./src/routes to define tab structure
 ├── app.json        # Defines app metadata, such as name, version, icon, etc.
 ├── package.json    # Defines app dependencies and startup scripts
 ├── assets

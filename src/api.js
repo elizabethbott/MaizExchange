@@ -20,7 +20,5 @@ export const testApi = async () => {
 };
 
 export const logInOrSignUp = async (accessToken) => {
-    const res = await request('/auth/logInOrSignUp', { accessToken });
-    if (res.result === "loggedIn") console.log("Logged in - welcome back " + res.firstName + "!");
-    else console.log("Signed up - welcome, " + res.firstName + "!");
+    return request('/auth/logInOrSignUp', { accessToken });
 }
