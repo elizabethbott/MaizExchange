@@ -32,6 +32,10 @@ This should open a tab in your browser showing a set of developer tools. Here yo
 
 If you're having a hard time loading the app on your phone successfully, make sure that your computer and your phone are on the same WiFi network. Alternatively, you can try switching the connection type from "LAN" to "Tunnel" in the browser dev tools and re-scanning the QR code. If your computer has firewalls enabled, you may also need to either disable them or create rules allowing Expo clients to connect.
 
+## Server Setup
+
+The previous steps get the frontend up and running, but it requires a functioning backend server to make requests to in order to work properly. Right now that server URL is hardcoded as `http://localhost:3000/`, which points to the host/port filled by the server-side Express app in the `JoelRummel/MaizExchangeServer` repository. You will either need to get that app up and running locally on your machine or wait for a live backend environment to be set up on AWS.
+
 ## Committing To The Repository
 
 ### Directory Structure
@@ -51,11 +55,15 @@ Here's an overview of the project's directory structure:
     │   └── ...
     ├── screens         # Contains root-level "screens", such as a Settings screen
     │   └── ...
-    └── routes          # Contains navigators that define "routes" through the app
+    ├── routes          # Contains navigators that define "routes" through the app
+    │   └── ...
+    ├── hooks           # Contains custom React hooks
+    │   └── ...
+    └── contexts        # Contains React contexts created with createContext()
         └── ...
 ```
 
-In general, things in the `components` folder are imported by things in the `screens` folder, which are imported by things in the `routes` folder. And everything imports `AppStyle.js`. You should be able to read and break down the source code by tracing it as such: `App.js -> routes -> screens -> components`.
+In general, things in the `components` folder are imported by things in the `screens` folder, which are imported by things in the `routes` folder. And everything imports hooks, `AppStyle.js`, etc. You should be able to read and break down the source code by tracing it as such: `App.js -> routes -> screens -> components`.
 
 ### Adding New Packages
 
