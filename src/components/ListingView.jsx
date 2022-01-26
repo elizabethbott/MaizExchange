@@ -8,7 +8,9 @@ const ListingView = () => {
     return (
         <View style={styles.container}>
             <Text style={{fontSize: 24,
-        fontWeight: 600}}>Hockey Tickets</Text>
+            fontWeight: 600}}>
+                Hockey Tickets
+                </Text>
            <ListingComponent/>
            <ListingComponent/>
            <ListingComponent/>
