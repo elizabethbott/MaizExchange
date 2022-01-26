@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import LogInOrOutButton from '../components/LogInOrOutButton';
 import UserContext from '../contexts/UserContext';
+import HeaderComponent from '../components/HeaderComponent';
+import ListingComponent from '../components/ListingComponent';
+import ListingView from '../components/ListingView';
 
 const HomeScreen = () => {
     const { user } = useContext(UserContext);
@@ -13,6 +16,10 @@ const HomeScreen = () => {
                     "Log in with your UMich Google account:"}
             </Text>
             <LogInOrOutButton />
+            <HeaderComponent />
+            {/* <ListingComponent /> */}
+            <ListingView />
+            
         </View>
     );
 };

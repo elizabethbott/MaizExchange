@@ -22,3 +22,7 @@ export const testApi = async () => {
 export const logInOrSignUp = async (accessToken) => {
     return request('/auth/logInOrSignUp', { accessToken });
 }
+
+export const getListings = async => {
+    return  request('/getListings', {  });
+}
