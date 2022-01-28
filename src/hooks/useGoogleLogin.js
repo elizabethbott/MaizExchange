@@ -4,6 +4,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { logInOrSignUp } from '../api';
 import UserContext from '../contexts/UserContext';
 
+
 WebBrowser.maybeCompleteAuthSession();
 
 const useGoogleLogin = (loginCallback = () => { }) => {
@@ -19,6 +20,8 @@ const useGoogleLogin = (loginCallback = () => { }) => {
     const returnUserInfo = async (accessToken) => {
         try {
             const user = await logInOrSignUp(accessToken);
+            console.log(user)
+            //const listings = await getListings();
             loginCallback(user);
             setUser(user);
         } catch (e) {

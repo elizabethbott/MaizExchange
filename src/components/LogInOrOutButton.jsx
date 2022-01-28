@@ -3,6 +3,7 @@ import { Button } from 'react-native';
 import UserContext from '../contexts/UserContext';
 import useGoogleLogin from '../hooks/useGoogleLogin';
 
+
 /**
  * A button that shows "Log In" if no one is logged in, or "Log Out"
  * otherwise, and logs in/out the user on press.
@@ -11,6 +12,7 @@ const LogInOrOutButton = ({ onError = console.log }) => {
     const logIn = () => {
         setAwaitingLogin(true);
         startLogin();
+        getAllListings();
     };
     const logOut = () => setUser(null);
     const handleLoginFinish = (newUser, error) => {

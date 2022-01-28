@@ -23,6 +23,9 @@ export const logInOrSignUp = async (accessToken) => {
     return request('/auth/logInOrSignUp', { accessToken });
 }
 
-export const getListings = async => {
-    return  request('/getListings', {  });
+export const getListings = async () => {
+    const res = await request('/listings/getListings');
+    console.log(res);
+    return res;
+    
 }

@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
-import { testApi } from '../api';
+
 import ListingComponent from '../components/ListingComponent';
 
 const ListingView = () => {
