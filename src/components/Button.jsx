@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderRadius: 8,
         borderColor: AppStyle.colors.blue,
-        padding: 5
+        padding: 8
     },
     filled: {
         backgroundColor: AppStyle.colors.blue
@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
     disabled: {
         backgroundColor: 'gray',
         borderColor: 'gray'
+    },
+    wide: {
+        width: '100%'
     },
     text: {
         textAlign: 'center',
@@ -26,7 +29,7 @@ const Button = ({ label, filled, wide, onPress, disabled }) => {
     return (
         <TouchableOpacity
             onPress={onPress}
-            style={[styles.baseButton, filled && styles.filled, disabled && styles.disabled]}
+            style={[styles.baseButton, filled && styles.filled, disabled && styles.disabled, wide && styles.wide]}
             disabled={disabled}
         >
             <Text style={[styles.text, (filled || disabled) && { color: 'white' }]}>{label}</Text>
