@@ -7,7 +7,7 @@ import Button from './Button';
  * A button that shows "Log In" if no one is logged in, or "Log Out"
  * otherwise, and logs in/out the user on press.
  */
-const LogInOrOutButton = ({ onError = console.log }) => {
+const LogInOrOutButton = ({ onError = console.log, ...props }) => {
     const logIn = () => {
         setAwaitingLogin(true);
         startLogin();
@@ -28,6 +28,7 @@ const LogInOrOutButton = ({ onError = console.log }) => {
             label={user ? "Log Out" : "Log In"}
             onPress={user ? logOut : logIn}
             filled
+            {...props}
         />
     );
 };
