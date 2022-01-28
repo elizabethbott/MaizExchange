@@ -27,11 +27,14 @@ const useGoogleLogin = (loginCallback = () => { }) => {
     }
 
     useEffect(() => {
+        if (!response) return;
         if (response?.type === 'success') {
             const { authentication } = response;
             returnUserInfo(authentication.accessToken);
         } else {
             console.log(response);
+            if (response.type === 'dismiss') loginCallback(null, new Error("User cancelled login"));
+            else loginCallback(null, new Error("Something went wrong, please try again"));
         }
     }, [response]);
 
