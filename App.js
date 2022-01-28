@@ -37,13 +37,13 @@ export default function App() {
                         }
                         }}/>
                         <Tab.Screen name="Notifications" component={NotificationsRoute} options={{tabBarIcon: ({focused}) => {
-                        if (focused){return <Icon name="notifications-sharp" size={30} color={'#0000FF'}/>;}
+                        if (focused){return <Icon name="notifications" size={30} color={'#0000FF'}/>;}
                         else {return <Icon name="notifications-outline" size={30} color={'#0000FF'}/>;}
                         }
                         }}/>
                         <Tab.Screen name="Settings" component={SettingsRoute} options={{tabBarIcon: ({focused}) => {
-                        if (focused){return <Icon name="settings" size={30} color={'#0000FF'}/>;}
-                        else {return <Icon name="settings-outline" size={30} color={'#0000FF'}/>;}
+                        if (focused){return <Icon name="person-circle" size={30} color={'#0000FF'}/>;}
+                        else {return <Icon name="person-circle-outline" size={30} color={'#0000FF'}/>;}
                         }
                         }}/>
                     </Tab.Navigator>
