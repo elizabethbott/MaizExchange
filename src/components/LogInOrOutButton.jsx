@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { Button } from 'react-native';
 import UserContext from '../contexts/UserContext';
 import useGoogleLogin from '../hooks/useGoogleLogin';
+import Button from './Button';
 
 /**
  * A button that shows "Log In" if no one is logged in, or "Log Out"
@@ -25,8 +25,9 @@ const LogInOrOutButton = ({ onError = console.log }) => {
     return (
         <Button
             disabled={awaitingLogin || !isReady}
-            title={user ? "Log Out" : "Log In"}
+            label={user ? "Log Out" : "Log In"}
             onPress={user ? logOut : logIn}
+            filled
         />
     );
 };
