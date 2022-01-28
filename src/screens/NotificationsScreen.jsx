@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import LogInOrOutButton from '../components/LogInOrOutButton';
 import UserContext from '../contexts/UserContext';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Ionicons';
 const NotificationsScreen = () => {
     const { user } = useContext(UserContext);
 
@@ -18,7 +18,7 @@ const NotificationsScreen = () => {
     return (
         <View style={styles.container}>
             <Text>Notifications Page</Text>
-            <Icon name="home" />
+            <Icon name="home-outline" />
         </View>
     );
 }
