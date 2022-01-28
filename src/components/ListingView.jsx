@@ -7,7 +7,7 @@ import ListingComponent from '../components/ListingComponent';
 
 const ListingView = (props) => {
 
-   console.log(props.details)
+   console.log(props.id);
     return (
         <View style={styles.container}>
             

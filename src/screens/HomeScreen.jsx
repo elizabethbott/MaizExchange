@@ -9,6 +9,9 @@ import { useEffect, useState } from 'react';
 import { getListings } from '../api';
 import ListingHeader from '../components/ListingHeader';
 
+//consider making a context with hard coded category values
+//then loop through in the useEffect and add them to the corrersponding context
+//then for each category send all the listings as an array to list view
 const HomeScreen = () => {
     const [listing, setListing] = useState([]);
     useEffect(() => {
@@ -44,16 +47,13 @@ const HomeScreen = () => {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
            
             <HeaderComponent />
-            {/* {user ? `Logged in as ${user.firstName} ${user.lastName}` :
-                    "Log in with your UMich Google account:"} */}
-
-            {/* <Text>
-             {listing.length != 0 ? `${listing['listings'][0]['details']}` : "not yet" }
-                </Text>    */}
+           
             <ListingHeader category={listing.length != 0 ? `${listing['listings'][0]['category']}` : "not yet" } />
-            
+{/*             
             {listing.length != 0 ? <ListingComponent details={listing['listings'][0]['details']} name={listing['listings'][0]['seller_id']} 
-            price={listing['listings'][0]['price']} image={listing['listings'][0]['image_url_slug']}/> : null}
+            price={listing['listings'][0]['price']} image={listing['listings'][0]['image_url_slug']}/> : null} */}
+
+            {listing.length != 0 ? <ListingComponent {...listing['listings'][0]} /> : null}
             
             
             

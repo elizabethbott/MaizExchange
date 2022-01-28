@@ -8,11 +8,12 @@ import { useEffect, useState } from 'react';
 const ListingComponent = (props) => {
 
     const [user, setUser] = useState([]);
+    
     useEffect(() => {
         console.log("in listing component")
         
         try{
-            const temp = getUser(props.name);
+            const temp = getUser(props.id);
             temp.then(value => {
                 console.log('userr resolved!')
                 console.log(value);
@@ -26,13 +27,21 @@ const ListingComponent = (props) => {
         }
         
     }, []);
+    if (user.length != 0){
+        console.log(user);
+        console.log(user['user'][0]['first_name']);
+    }
 
    
     return (
         <View style={styles.container}>
-            {/* <Image style={{width: 111, height:110 }}source={require(`{props.image}`)} /> */}
+            {/* will have to change when i figure out where we will be storing our images */}
+            <Image style={{width: 111, height:110 }}source={require(`../../assets/${props.image_url_slug}`)} />
             <Text> {props.details}</Text>
-            <Text> {props.name}</Text>
+            <Text> 
+                {user.length != 0? `${user['user'][0]['first_name']} ${user['user'][0]['last_name']}` : ""}
+
+                </Text>
             <Text style={{fontWeight: 600}}> $20</Text>
         </View>
     );
