@@ -12,7 +12,7 @@ const LogInOrOutButton = ({ onError = console.log }) => {
     const logIn = () => {
         setAwaitingLogin(true);
         startLogin();
-        getAllListings();
+       
     };
     const logOut = () => setUser(null);
     const handleLoginFinish = (newUser, error) => {

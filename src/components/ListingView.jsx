@@ -1,16 +1,16 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
-
+import { getListings } from '../api';
+import { useContext} from 'react';
+import ListingContext from '../contexts/ListingContext';
 import ListingComponent from '../components/ListingComponent';
 
-const ListingView = () => {
-  
+const ListingView = (props) => {
+
+   console.log(props.details)
     return (
         <View style={styles.container}>
-            <Text style={{fontSize: 24,
-            fontWeight: 600}}>
-                Hockey Tickets
-                </Text>
+            
            <ListingComponent/>
            <ListingComponent/>
            <ListingComponent/>

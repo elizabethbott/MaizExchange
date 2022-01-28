@@ -25,7 +25,17 @@ export const logInOrSignUp = async (accessToken) => {
 
 export const getListings = async () => {
     const res = await request('/listings/getListings');
+    // console.log(res);
+    // console.log(res.length)
+    return res;
+   // return res;
+    
+}
+export const getUser = async (id) => {
+    console.log(id)
+    const res = await request('/users/getUser',  {id});
+    console.log('getting user')
     console.log(res);
     return res;
-    
+
 }
