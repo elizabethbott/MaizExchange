@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../screens/HomeScreen';
+import NewListingScreen from '../screens/NewListingScreen';
 
 const Stack = createStackNavigator();
 
-const HomeRoute = () => (
+const NewListingRoute = () => (
     <Stack.Navigator>
-        <Stack.Screen name="Home Screen" component={HomeScreen} />
+        <Stack.Screen name="New Listing Screen" component={NewListingScreen} />
     </Stack.Navigator>
 );
 
-export default HomeRoute;
+export default NewListingRoute;

@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../screens/HomeScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const Stack = createStackNavigator();
 
-const HomeRoute = () => (
+const SearchRoute = () => (
     <Stack.Navigator>
-        <Stack.Screen name="Home Screen" component={HomeScreen} />
+        <Stack.Screen name="Search Screen" component={SearchScreen} />
     </Stack.Navigator>
 );
 
-export default HomeRoute;
+export default SearchRoute;

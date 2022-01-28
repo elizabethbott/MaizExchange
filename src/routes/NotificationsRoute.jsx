@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../screens/HomeScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
 
 const Stack = createStackNavigator();
 
-const HomeRoute = () => (
+const NotificationsRoute = () => (
     <Stack.Navigator>
-        <Stack.Screen name="Home Screen" component={HomeScreen} />
+        <Stack.Screen name="Notifications Screen" component={NotificationsScreen} />
     </Stack.Navigator>
 );
 
-export default HomeRoute;
+export default NotificationsRoute;
