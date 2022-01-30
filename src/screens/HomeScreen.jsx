@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image , ScrollView} from 'react-native';
 import showLogin from '../components/showLogin';
 import UserContext from '../contexts/UserContext';
 import HeaderComponent from '../components/HeaderComponent';
@@ -9,24 +9,42 @@ import { useEffect, useState } from 'react';
 import { getListings } from '../api';
 import ListingHeader from '../components/ListingHeader';
 
-//consider making a context with hard coded category values
-//then loop through in the useEffect and add them to the corrersponding context
-//then for each category send all the listings as an array to list view
+
 const HomeScreen = () => {
-    const [listing, setListing] = useState([]);
+    const [listing, setListing] = useState();
+    const [tickets, setTickets] = useState([]);
+    const [textbooks, setTextBooks] = useState([]);
+    const [other, setOther] = useState([]);
     useEffect(() => {
-        console.log("in listing component")
+
         
         try{
             const temp = getListings();
             temp.then(value => {
                 console.log('resolved!')
-                console.log(value);
-                setListing(value);
+                console.log(value['listings'].length);
+                setListing(value['listings']);
+                for (let i  = 0; i < value['listings'].length; i++){
+                    if (value['listings'][i]['type'] === "ticket"){
+                        setTickets((tickets) => [...tickets, value['listings'][i]])
+                        //console.log(value['listings'][i]);
+                       
+                    } if (value['listings'][i]['type'] === "textbook"){
+                        setTextBooks((textbooks) => [...textbooks, value['listings'][i]])
+                        //console.log(value['listings'][i]);
+                       
+                    }
+                    if (value['listings'][i]['type'] === "other"){
+                        setOther((other) => [...other, value['listings'][i]])
+                        //console.log(value['listings'][i]);
+                       
+                    }
+                    
+                }
+                
 
             });
 
-            console.log(temp);
         } catch{
             console.log('errror :(');
         }
@@ -34,10 +52,13 @@ const HomeScreen = () => {
     }, []);
 
 
-    if (listing.length != 0){
+    if (listing){
         console.log('listing recieved!');
-        console.log(listing);
-        console.log(listing['listings'][0])
+        
+    }
+    if (tickets){
+        console.log(tickets)
+        console.log(tickets.length)
     }
 
 
@@ -45,18 +66,26 @@ const HomeScreen = () => {
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <ScrollView>
            
             <HeaderComponent />
-           
-            <ListingHeader category={listing.length != 0 ? `${listing['listings'][0]['category']}` : "not yet" } />
-{/*             
-            {listing.length != 0 ? <ListingComponent details={listing['listings'][0]['details']} name={listing['listings'][0]['seller_id']} 
-            price={listing['listings'][0]['price']} image={listing['listings'][0]['image_url_slug']}/> : null} */}
+            <View >
+            
+                <ListingHeader category={tickets.length != 0 ? `${tickets[0]['type']}` : "" } /> 
+                 {tickets.length  ? <ListingView list={{...tickets}}/> : null}
 
-            {listing.length != 0 ? <ListingComponent {...listing['listings'][0]} /> : null}
+                 <ListingHeader category={textbooks.length != 0 ? `${textbooks[0]['type']}` : "" } /> 
+                 {textbooks.length ? <ListingView list={{...textbooks}}/> : null}
+
+                 <ListingHeader category={other.length != 0 ? `${other[0]['type']}` : "" } /> 
+                 {other.length  ? <ListingView list={{...other}}/> : null}
+
+
+               
+            </View>
+           
             
-            
-            
+            </ScrollView>
         </View>
     );
 };

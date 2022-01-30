@@ -13,7 +13,7 @@ const ListingComponent = (props) => {
         console.log("in listing component")
         
         try{
-            const temp = getUser(props.id);
+            const temp = getUser(props.seller_id);
             temp.then(value => {
                 console.log('userr resolved!')
                 console.log(value);
@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
         alignContent: "center",
         fontFamily: "Inter",
         fontSize: 14,
-        fontWeight: 400
+        fontWeight: 400,
+        padding: 15
         
     },
 });
