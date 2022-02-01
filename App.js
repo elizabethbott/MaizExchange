@@ -23,27 +23,27 @@ export default function App() {
                     <Tab.Navigator screenOptions={{ headerShown: false }}>
                         <Tab.Screen name="Home" component={HomeRoute} options={{tabBarIcon: ({focused}) => {
                         if (focused){return <Icon name="home" size={30} color={'#0000FF'}/>;}
-                        else {return <Icon name="home-outline" size={30} color={'#0000FF'}/>;}
+                        else {return <Icon name="home-outline" size={30} color={'#808080'}/>;}
                         }
                         }}/>
                         <Tab.Screen name="Search" component={SearchRoute} options={{tabBarIcon: ({focused}) => {
                         if (focused){return <Icon name="search-circle-sharp" size={30} color={'#0000FF'}/>;}
-                        else {return <Icon name="search-circle-outline" size={30} color={'#0000FF'}/>;}
+                        else {return <Icon name="search-circle-outline" size={30} color={'#808080'}/>;}
                         }
                         }}/>
                         <Tab.Screen name="New Listing" component={NewListingRoute} options={{tabBarIcon: ({focused}) => {
                         if (focused){return <Icon name="ios-create" size={30} color={'#0000FF'}/>;}
-                        else {return <Icon name="ios-create-outline" size={30} color={'#0000FF'}/>;}
+                        else {return <Icon name="ios-create-outline" size={30} color={'#808080'}/>;}
                         }
                         }}/>
                         <Tab.Screen name="Notifications" component={NotificationsRoute} options={{tabBarIcon: ({focused}) => {
                         if (focused){return <Icon name="notifications" size={30} color={'#0000FF'}/>;}
-                        else {return <Icon name="notifications-outline" size={30} color={'#0000FF'}/>;}
+                        else {return <Icon name="notifications-outline" size={30} color={'#808080'}/>;}
                         }
                         }}/>
                         <Tab.Screen name="Settings" component={SettingsRoute} options={{tabBarIcon: ({focused}) => {
                         if (focused){return <Icon name="person-circle" size={30} color={'#0000FF'}/>;}
-                        else {return <Icon name="person-circle-outline" size={30} color={'#0000FF'}/>;}
+                        else {return <Icon name="person-circle-outline" size={30} color={'#808080'}/>;}
                         }
                         }}/>
                     </Tab.Navigator>
