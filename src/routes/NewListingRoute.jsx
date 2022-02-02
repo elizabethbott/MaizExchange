@@ -6,7 +6,7 @@ const Stack = createStackNavigator();
 
 const NewListingRoute = () => (
     <Stack.Navigator>
-        <Stack.Screen name="New Listing Screen" component={NewListingScreen} />
+        <Stack.Screen name="New Listing" component={NewListingScreen} />
     </Stack.Navigator>
 );
 
