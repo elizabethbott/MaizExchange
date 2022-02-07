@@ -6,39 +6,88 @@ import { RadioButton, Button } from 'react-native-paper';
 const NewListingScreen = () => {
     const { user } = useContext(UserContext);
     const [checked, setChecked] = React.useState('first');
-    //const [number, onChangeNumber] = React.useState(null);
+    const [description, setDescription] = React.useState('');
 
     const text = "test";
+    const press = () => {
+        alert('button pressed');
+    }
+
+    //TextInput onchange (calls function on every key stroke) & value props
+    // store value from onChange to state 
+
+    //define new state variables for each TextInput
     return (
         <ScrollView>
             <View style={{alignItems: 'center'}}>
             <View style={styles.container}>
             <Text style={styles.sectionheaders}>Add Description</Text>
-            <TextInput style={styles.textfields}
+            <TextInput 
+                style={styles.textfields}
+                value={description}
                 placeholder="Description"
+                onChange={() => setDescription(description)}
             />
+            
 
-            <Text style={styles.sectionheaders}>Category</Text>
-            <View style={styles.radiobutton}><Text>Football</Text><RadioButton
+            <Text style={styles.sectionheaders}>Type</Text>
+            <View style={styles.radiobutton}><Text>Tickets</Text><RadioButton
                 value="first"
                 status={ checked === 'first' ? 'checked' : 'unchecked' }
                 onPress={() => setChecked('first')}
                 color="#00274C"
             /></View>
+
+            {
+                ( checked === 'first') && 
+                <View style={styles.categories}>
+                <Text>Category</Text>
+                <TextInput 
+                    style={styles.textfields}
+                    onChangeText={(text)=> this.onChanged(text)}
+                    placeholder="Category"
+                />
+                </View>
+            }
+
             
-            <View style={styles.radiobutton}><Text>Hockey</Text><RadioButton
+            <View style={styles.radiobutton}><Text>Textbooks</Text><RadioButton
                 value="second"
                 status={ checked === 'second' ? 'checked' : 'unchecked' }
                 onPress={() => setChecked('second')}
                 color="#00274C"
             /></View>
 
-            <View style={styles.radiobutton}><Text>Basketball</Text><RadioButton
+            {   
+                ( checked === 'second') && 
+                <View style={styles.categories}>
+                <Text>Category</Text>
+                <TextInput 
+                    style={styles.textfields}
+                    onChangeText={(text)=> this.onChanged(text)}
+                    placeholder="Category"
+                />
+                </View>
+            }
+
+            <View style={styles.radiobutton}><Text>Other</Text><RadioButton
                 value="third"
                 status={ checked === 'third' ? 'checked' : 'unchecked' }
                 onPress={() => setChecked('third')}
                 color="#00274C"
             /></View>
+            {
+                ( checked === 'third') && 
+                <View style={styles.categories}>
+                <Text>Category</Text>
+                <TextInput 
+                    style={styles.textfields}
+                    onChangeText={(text)=> this.onChanged(text)}
+                    placeholder="Category"
+                />
+                </View>
+            }
+            
 
             <Text style={styles.sectionheaders}>Price</Text>
             <TextInput 
@@ -49,7 +98,7 @@ const NewListingScreen = () => {
                 maxLength={10}
             />
             
-            <View style={styles.buttonboi}><Button icon="card-plus" mode="contained" onPress={() => console.log('Pressed')} color="#FFCB05">
+            <View style={styles.buttonboi}><Button onPress={press} icon="card-plus" mode="contained" color="#FFCB05">
                 Create Listing
             </Button></View>
             
@@ -65,7 +114,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'Left',
+        alignItems: 'left',
         justifyContent: 'center',
         width: '50%'
     },
@@ -74,7 +123,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         width: '100%', 
         height: 40,
-        borderBottomWidth: 1,
+        borderTopWidth: 1,
         padding: 8,
         alignItems: 'center',
         justifyContent: 'space-between'
@@ -85,6 +134,14 @@ const styles = StyleSheet.create({
         fontWeight: "900",
         marginTop: 16,
         marginBottom: 4
+    },
+
+    categories: {
+        paddingLeft: 32,
+        fontSize: 10,
+        fontWeight: '200',
+        marginTop: 16,
+        marginBottom: 16,
     },
 
     textfields: {

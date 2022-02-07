@@ -41,7 +41,7 @@ export default function App() {
                         else {return <Icon name="notifications-outline" size={30} color={'#808080'}/>;}
                         }
                         }}/>
-                        <Tab.Screen name="Settings" component={SettingsRoute} options={{tabBarIcon: ({focused}) => {
+                        <Tab.Screen name="Profile" component={SettingsRoute} options={{tabBarIcon: ({focused}) => {
                         if (focused){return <Icon name="person-circle" size={30} color={'#0000FF'}/>;}
                         else {return <Icon name="person-circle-outline" size={30} color={'#808080'}/>;}
                         }
