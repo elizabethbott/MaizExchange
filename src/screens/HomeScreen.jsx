@@ -21,8 +21,8 @@ const HomeScreen = () => {
         try{
             const temp = getListings();
             temp.then(value => {
-                console.log('resolved!')
-                console.log(value['listings'].length);
+                // console.log('resolved!')
+                // console.log(value['listings'].length);
                 setListing(value['listings']);
                 for (let i  = 0; i < value['listings'].length; i++){
                     if (value['listings'][i]['type'] === "ticket"){
@@ -52,17 +52,6 @@ const HomeScreen = () => {
     }, []);
 
 
-    if (listing){
-        console.log('listing recieved!');
-        
-    }
-    if (tickets){
-        console.log(tickets)
-        console.log(tickets.length)
-    }
-
-
-
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -72,18 +61,15 @@ const HomeScreen = () => {
             <View >
             
                 <ListingHeader category={tickets.length != 0 ? `${tickets[0]['type']}` : "" } /> 
-                 {tickets.length  ? <ListingView list={{...tickets}}/> : null}
+                 {tickets.length  != 0 ? <ListingView list={tickets}/> : null}
 
                  <ListingHeader category={textbooks.length != 0 ? `${textbooks[0]['type']}` : "" } /> 
-                 {textbooks.length ? <ListingView list={{...textbooks}}/> : null}
+                 {textbooks.length != 0? <ListingView list={textbooks}/> : null}
 
                  <ListingHeader category={other.length != 0 ? `${other[0]['type']}` : "" } /> 
-                 {other.length  ? <ListingView list={{...other}}/> : null}
-
-
+                 {other.length != 0  ? <ListingView list={other}/> : null}
                
             </View>
-           
             
             </ScrollView>
         </View>

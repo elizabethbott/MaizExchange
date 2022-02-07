@@ -1,4 +1,4 @@
-import React, { useEffect, useState, render } from 'react';
+import React, { useEffect, useState, render, Component } from 'react';
 import { StyleSheet, SafeAreaView,  FlatList, Text, View, Image} from 'react-native';
 
 import ListingComponent from '../components/ListingComponent';
@@ -41,20 +41,33 @@ const ListingView = (props) => {
         </View>
     );
 
-   
+    // const list = () => {
+        
+    //     console.log(props)
+    //     console.log(data)
+    //     return 
+        
+      
+    //   };
+
+    const data = Array.from(props);
     return (
         <View style={styles.container}>
 
-        <ListingComponent {...props.list[0]}> </ListingComponent>
+        {/* <ListingComponent {...props.list[0]}> </ListingComponent> */}
 
-        {/* <FlatList
-            data={props.list}
-            renderItem={({item}) => <ItemList name={item} />}
-        /> 
+
         
-        need to figure out this stupid flat list shit, rn tis hardcoded*/}
-        
-        
+                {/* {list()} */}
+                {props.list.map((element) => {
+                    return(
+         
+                        <View key={element.id} style={{margin: 10}}>
+                        <ListingComponent {...element} ></ListingComponent>
+                        </View>
+                    )
+            
+            })}
       
         
         
