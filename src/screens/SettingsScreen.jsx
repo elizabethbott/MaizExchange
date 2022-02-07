@@ -14,11 +14,8 @@ const SettingsScreen = () => {
             <Text>Example screen for settings - hello world!</Text>
             <ExampleComponent />
 
-            <Text >
-                {user ? `Logged in as ${user.firstName} ${user.lastName}` :
-                    "Log in with your UMich Google account:"}
-            </Text>
-            <LogInOrOutButton />
+           
+            
         </View>
     );
 }

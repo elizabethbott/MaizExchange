@@ -1,5 +1,5 @@
 import React, { useEffect, useState, render, Component } from 'react';
-import { StyleSheet, SafeAreaView,  FlatList, Text, View, Image} from 'react-native';
+import { StyleSheet, SafeAreaView,  FlatList, Text, View, Image, ScrollView} from 'react-native';
 
 import ListingComponent from '../components/ListingComponent';
 
@@ -57,7 +57,7 @@ const ListingView = (props) => {
         {/* <ListingComponent {...props.list[0]}> </ListingComponent> */}
 
 
-        
+            <ScrollView>
                 {/* {list()} */}
                 {props.list.map((element) => {
                     return(
@@ -68,6 +68,7 @@ const ListingView = (props) => {
                     )
             
             })}
+            </ScrollView>
       
         
         
