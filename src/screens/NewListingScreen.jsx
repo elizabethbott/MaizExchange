@@ -2,15 +2,26 @@ import React, { useContext } from 'react';
 import { Text, View, StyleSheet, TextInput, ScrollView } from 'react-native';
 import UserContext from '../contexts/UserContext';
 import { RadioButton, Button } from 'react-native-paper';
+import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
 
 const NewListingScreen = () => {
     const { user } = useContext(UserContext);
     const [checked, setChecked] = React.useState('first');
     const [description, setDescription] = React.useState('');
+    const [category, setCategory] = React.useState('');
+    const [price, setPrice] = React.useState(0);
 
     const text = "test";
     const press = () => {
         alert('button pressed');
+        alert(description);
+        alert(checked);
+        alert(category);
+        alert(price);
+        setDescription('');
+        setChecked("first");
+        setCategory('');
+        setPrice(0);
     }
 
     //TextInput onchange (calls function on every key stroke) & value props
@@ -26,7 +37,7 @@ const NewListingScreen = () => {
                 style={styles.textfields}
                 value={description}
                 placeholder="Description"
-                onChange={() => setDescription(description)}
+                onChangeText={setDescription}
             />
             
 
@@ -44,8 +55,10 @@ const NewListingScreen = () => {
                 <Text>Category</Text>
                 <TextInput 
                     style={styles.textfields}
-                    onChangeText={(text)=> this.onChanged(text)}
+                    value={category}
+                    onChangeText={setCategory}
                     placeholder="Category"
+
                 />
                 </View>
             }
@@ -64,7 +77,8 @@ const NewListingScreen = () => {
                 <Text>Category</Text>
                 <TextInput 
                     style={styles.textfields}
-                    onChangeText={(text)=> this.onChanged(text)}
+                    value={category}
+                    onChangeText={setCategory}
                     placeholder="Category"
                 />
                 </View>
@@ -82,7 +96,8 @@ const NewListingScreen = () => {
                 <Text>Category</Text>
                 <TextInput 
                     style={styles.textfields}
-                    onChangeText={(text)=> this.onChanged(text)}
+                    value={category}
+                    onChangeText={setCategory}
                     placeholder="Category"
                 />
                 </View>
@@ -92,8 +107,9 @@ const NewListingScreen = () => {
             <Text style={styles.sectionheaders}>Price</Text>
             <TextInput 
                 style={styles.textfields}
+                value={price}
                 keyboardType='numeric'
-                onChangeText={(text)=> this.onChanged(text)}
+                onChangeText={setPrice}
                 placeholder="$$"
                 maxLength={10}
             />
