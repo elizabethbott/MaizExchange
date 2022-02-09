@@ -3,6 +3,7 @@ import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
 import { logInOrSignUp } from '../api';
 import UserContext from '../contexts/UserContext';
+import useSavedAccessToken from './useSavedAccessToken';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -15,10 +16,12 @@ const useGoogleLogin = (loginCallback = () => { }) => {
     });
 
     const { setUser } = useContext(UserContext);
+    const { saveAccessToken } = useSavedAccessToken();
 
     const returnUserInfo = async (accessToken) => {
         try {
             const user = await logInOrSignUp(accessToken);
+            await saveAccessToken(accessToken);
             loginCallback(user);
             setUser(user);
         } catch (e) {
@@ -27,11 +30,14 @@ const useGoogleLogin = (loginCallback = () => { }) => {
     }
 
     useEffect(() => {
+        if (!response) return;
         if (response?.type === 'success') {
             const { authentication } = response;
             returnUserInfo(authentication.accessToken);
         } else {
             console.log(response);
+            if (response.type === 'dismiss') loginCallback(null, new Error("User cancelled login"));
+            else loginCallback(null, new Error("Something went wrong, please try again"));
         }
     }, [response]);
 

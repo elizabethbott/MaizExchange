@@ -11,11 +11,12 @@ const classes = StyleSheet.create({
     }
 });
 
-export default {
+const AppStyle = {
     classes,
     colors: {
         maize,
         blue
     }
 };
+export default AppStyle;
 
