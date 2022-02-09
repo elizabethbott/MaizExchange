@@ -108,9 +108,11 @@ const NewListingScreen = () => {
                         maxLength={10}
                     />
 
-                    <View style={styles.buttonboi}><Button onPress={press} icon="card-plus" mode="contained" color="#FFCB05">
-                        Create Listing
-                    </Button></View>
+                    <View style={styles.buttonboi}>
+                        <Button onPress={press} icon="card-plus" mode="contained" color="#FFCB05">
+                            Create Listing
+                        </Button>
+                    </View>
                 </View>
             </View>
         </ScrollView>
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'left',
+        alignItems: 'flex-start',
         justifyContent: 'center',
         width: '50%'
     },
