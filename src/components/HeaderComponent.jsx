@@ -1,18 +1,15 @@
-import React, { useLayoutEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { testApi } from '../api';
+import React from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
-import { Platform } from "react-native";
 
 const HeaderComponent = () => {
-   
     return (
         <View style={styles.container}>
-           <Icon
+            <Icon
                 name={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 size={50}
             />
-            <Text style={{fontFamily: "Inter", fontWeight: 500, fontSize: 24}}>
+            <Text style={{ fontFamily: "Inter", fontWeight: 500, fontSize: 24 }}>
                 MaizExchange
             </Text>
         </View>

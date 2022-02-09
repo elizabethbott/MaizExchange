@@ -1,76 +1,51 @@
-import React, { useContext } from 'react';
-import { Text, View, Image , ScrollView} from 'react-native';
-import showLogin from '../components/showLogin';
-import UserContext from '../contexts/UserContext';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView } from 'react-native';
 import HeaderComponent from '../components/HeaderComponent';
-import ListingComponent from '../components/ListingComponent';
 import ListingView from '../components/ListingView';
-import { useEffect, useState } from 'react';
-import { getListings } from '../api';
 import ListingHeader from '../components/ListingHeader';
-
+import { getListings } from '../api';
 
 const HomeScreen = () => {
-    const [listing, setListing] = useState();
     const [tickets, setTickets] = useState([]);
     const [textbooks, setTextBooks] = useState([]);
     const [other, setOther] = useState([]);
-    useEffect(() => {
 
-        
-        try{
+    useEffect(() => {
+        try {
             const temp = getListings();
             temp.then(value => {
-                // console.log('resolved!')
-                // console.log(value['listings'].length);
-                setListing(value['listings']);
-                for (let i  = 0; i < value['listings'].length; i++){
-                    if (value['listings'][i]['type'] === "ticket"){
+                for (let i = 0; i < value['listings'].length; i++) {
+                    if (value['listings'][i]['type'] === "ticket") {
                         setTickets((tickets) => [...tickets, value['listings'][i]])
-                        //console.log(value['listings'][i]);
-                       
-                    } if (value['listings'][i]['type'] === "textbook"){
+                    } if (value['listings'][i]['type'] === "textbook") {
                         setTextBooks((textbooks) => [...textbooks, value['listings'][i]])
-                        //console.log(value['listings'][i]);
-                       
                     }
-                    if (value['listings'][i]['type'] === "other"){
+                    if (value['listings'][i]['type'] === "other") {
                         setOther((other) => [...other, value['listings'][i]])
-                        //console.log(value['listings'][i]);
-                       
                     }
-                    
                 }
-                
-
             });
-
-        } catch{
+        } catch {
             console.log('errror :(');
         }
-        
     }, []);
-
-
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <ScrollView>
-           
-            <HeaderComponent />
-            <View >
-            
-                <ListingHeader category={tickets.length != 0 ? `${tickets[0]['type']}` : "" } /> 
-                 {tickets.length  != 0 ? <ListingView list={tickets}/> : null}
+                <HeaderComponent />
+                <View >
 
-                 <ListingHeader category={textbooks.length != 0 ? `${textbooks[0]['type']}` : "" } /> 
-                 {textbooks.length != 0? <ListingView list={textbooks}/> : null}
+                    <ListingHeader category={tickets.length != 0 ? `${tickets[0]['type']}` : ""} />
+                    {tickets.length != 0 ? <ListingView list={tickets} /> : null}
 
-                 <ListingHeader category={other.length != 0 ? `${other[0]['type']}` : "" } /> 
-                 {other.length != 0  ? <ListingView list={other}/> : null}
-               
-            </View>
-            
+                    <ListingHeader category={textbooks.length != 0 ? `${textbooks[0]['type']}` : ""} />
+                    {textbooks.length != 0 ? <ListingView list={textbooks} /> : null}
+
+                    <ListingHeader category={other.length != 0 ? `${other[0]['type']}` : ""} />
+                    {other.length != 0 ? <ListingView list={other} /> : null}
+
+                </View>
             </ScrollView>
         </View>
     );
