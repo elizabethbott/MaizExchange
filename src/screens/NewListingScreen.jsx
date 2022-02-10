@@ -4,12 +4,13 @@ import UserContext from '../contexts/UserContext';
 import { RadioButton, Button } from 'react-native-paper';
 import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
 
+
 const NewListingScreen = () => {
     const { user } = useContext(UserContext);
-    const [checked, setChecked] = React.useState('first');
+    const [checked, setChecked] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [category, setCategory] = React.useState('');
-    const [price, setPrice] = React.useState(0);
+    const [price, setPrice] = React.useState('');
 
     const text = "test";
     const press = () => {
@@ -24,14 +25,27 @@ const NewListingScreen = () => {
         setPrice(0);
     }
 
+    const Category = () => {
+        return (
+            <View style={styles.categories}>
+            <Text>Category</Text>
+            <TextInput 
+                style={styles.textfields}
+                value={category}
+                onChangeText={setCategory}
+                placeholder="Category"
+    
+            />
+            </View>
+        );
+    }
+
     //TextInput onchange (calls function on every key stroke) & value props
     // store value from onChange to state 
 
     //define new state variables for each TextInput
     return (
-        <ScrollView>
-            <View style={{alignItems: 'center'}}>
-            <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.sectionheaders}>Add Description</Text>
             <TextInput 
                 style={styles.textfields}
@@ -47,20 +61,11 @@ const NewListingScreen = () => {
                 status={ checked === 'first' ? 'checked' : 'unchecked' }
                 onPress={() => setChecked('first')}
                 color="#00274C"
+                uncheckedColor='#EAE8E4'
             /></View>
 
             {
-                ( checked === 'first') && 
-                <View style={styles.categories}>
-                <Text>Category</Text>
-                <TextInput 
-                    style={styles.textfields}
-                    value={category}
-                    onChangeText={setCategory}
-                    placeholder="Category"
-
-                />
-                </View>
+                ( checked === 'first') && Category()
             }
 
             
@@ -69,19 +74,11 @@ const NewListingScreen = () => {
                 status={ checked === 'second' ? 'checked' : 'unchecked' }
                 onPress={() => setChecked('second')}
                 color="#00274C"
+                uncheckedColor='#EAE8E4'
             /></View>
 
             {   
-                ( checked === 'second') && 
-                <View style={styles.categories}>
-                <Text>Category</Text>
-                <TextInput 
-                    style={styles.textfields}
-                    value={category}
-                    onChangeText={setCategory}
-                    placeholder="Category"
-                />
-                </View>
+                ( checked === 'second') && Category()
             }
 
             <View style={styles.radiobutton}><Text>Other</Text><RadioButton
@@ -89,18 +86,10 @@ const NewListingScreen = () => {
                 status={ checked === 'third' ? 'checked' : 'unchecked' }
                 onPress={() => setChecked('third')}
                 color="#00274C"
+                uncheckedColor='#EAE8E4'
             /></View>
             {
-                ( checked === 'third') && 
-                <View style={styles.categories}>
-                <Text>Category</Text>
-                <TextInput 
-                    style={styles.textfields}
-                    value={category}
-                    onChangeText={setCategory}
-                    placeholder="Category"
-                />
-                </View>
+                ( checked === 'third') && Category()
             }
             
 
@@ -118,9 +107,6 @@ const NewListingScreen = () => {
                 Create Listing
             </Button></View>
             
-          </View>
-        
-          </View>
         </ScrollView>
         
     );
@@ -130,26 +116,29 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'left',
+        alignItems: 'flex-start',
         justifyContent: 'center',
-        width: '50%'
+        width: '50%',
+        marginLeft: '25%',
     },
 
     radiobutton: {
         flexDirection: 'row', 
         width: '100%', 
-        height: 40,
+        height: 70,
         borderTopWidth: 1,
         padding: 8,
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        color: '#EAE8E4',
     },
 
     sectionheaders: {
         fontSize: 12,
         fontWeight: "900",
         marginTop: 16,
-        marginBottom: 4
+        marginBottom: 4,
+        marginLeft: 8,
     },
 
     categories: {
@@ -168,13 +157,12 @@ const styles = StyleSheet.create({
         //backgroundColor: '#D3D3D3', 
         padding:4,
         textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        marginLeft: 8,
     },
 
 
     buttonboi: {
-        margin: 8,
-        marginRight: 50,
-        marginLeft: 50
+        margin: 16,
     }
 });
 
