@@ -8,11 +8,10 @@ const HomeScreen = () => {
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>
-                {user ? `Logged in as ${user.firstName} ${user.lastName}` :
-                    "Log in with your UMich Google account:"}
+            <Text style={{ marginBottom: 20 }}>
+                Hello this is home screen. You are logged in as {user.firstName} {user.lastName}
             </Text>
-            <LogInOrOutButton />
+            <LogInOrOutButton filled={false} />
         </View>
     );
 };
