@@ -19,7 +19,7 @@ const ListingComponent = (props) => {
     return (
         <View style={styles.container}>
             {/* will have to change when i figure out where we will be storing our images */}
-            <Image style={{ width: 111, height: 110 }} source={require(`../../assets/${props.image_url_slug}`)} />
+            {props.image_url_slug != "" ? <Image style={{ width: 111, height: 110 }} source={require(`../../assets/${props.image_url_slug}`)}/> : null} 
             <Text> {props.details}</Text>
             <Text>
                 {user.length != 0 ? `${user['user'][0]['first_name']} ${user['user'][0]['last_name']}` : ""}

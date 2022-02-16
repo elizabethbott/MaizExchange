@@ -36,8 +36,15 @@ const HomeScreen = () => {
                 <HeaderComponent />
                 <View >
 
-                    <ListingHeader category={tickets.length != 0 ? `${tickets[0]['type']}` : ""} />
-                    {tickets.length != 0 ? <ListingView list={tickets} /> : null}
+                    {/* <ListingHeader category={tickets.length != 0 ? `${tickets[0]['type']}` : ""} />
+                    {tickets.length != 0 ? <ListingView list={tickets} /> : null} */}
+
+                    {tickets.length > 0 && (
+                        <View>
+                            <ListingHeader category="Tickets" />
+                            <ListingView list={tickets} />
+                        </View>
+                     )}     
 
                     <ListingHeader category={textbooks.length != 0 ? `${textbooks[0]['type']}` : ""} />
                     {textbooks.length != 0 ? <ListingView list={textbooks} /> : null}
