@@ -30,7 +30,7 @@ const NewListingScreen = () => {
             <View style={styles.categories}>
             <Text>Category</Text>
             <TextInput 
-                style={styles.textfields}
+                style={styles.categoryfields}
                 value={category}
                 onChangeText={setCategory}
                 placeholder="Category"
@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        width: '50%',
-        marginLeft: '25%',
+        //width: '50%',
+        //marginLeft: '25%',
     },
 
     radiobutton: {
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
         fontWeight: '200',
         marginTop: 16,
         marginBottom: 16,
+        width: '75%',
     },
 
     textfields: {
@@ -160,6 +161,16 @@ const styles = StyleSheet.create({
         marginLeft: 8,
     },
 
+    categoryfields: {
+        height: 40, 
+        width: '100%', 
+        borderColor: '#00274C', 
+        borderWidth: 1, 
+        //backgroundColor: '#D3D3D3', 
+        padding:4,
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        marginLeft: 8,
+    },
 
     buttonboi: {
         margin: 16,
