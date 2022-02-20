@@ -5,12 +5,9 @@ import AppStyle from '../AppStyle';
 const styles = StyleSheet.create({
     baseButton: {
         borderWidth: 3,
-        borderRadius: 8,
+        borderRadius: 5,
         borderColor: AppStyle.colors.blue,
         padding: 8
-    },
-    filled: {
-        backgroundColor: AppStyle.colors.blue
     },
     disabled: {
         backgroundColor: 'gray',
@@ -25,14 +22,29 @@ const styles = StyleSheet.create({
     }
 });
 
-const Button = ({ label, filled, wide, onPress, disabled }) => {
+const Button = ({ label, icon, filled, wide, onPress, disabled, bold, color = "blue" }) => {
+    const c = AppStyle.colors[color];
+
     return (
         <TouchableOpacity
             onPress={onPress}
-            style={[styles.baseButton, filled && styles.filled, disabled && styles.disabled, wide && styles.wide]}
+            style={[
+                styles.baseButton,
+                { borderColor: c },
+                filled && { backgroundColor: c },
+                disabled && styles.disabled,
+                wide && styles.wide
+            ]}
             disabled={disabled}
         >
-            <Text style={[styles.text, (filled || disabled) && { color: 'white' }]}>{label}</Text>
+            <Text style={[
+                styles.text,
+                ((filled && color === "blue") || disabled) && { color: 'white' },
+                bold && { fontWeight: "bold" }
+            ]}>
+                {icon ? icon : null}
+                {label}
+            </Text>
         </TouchableOpacity>
     );
 };
