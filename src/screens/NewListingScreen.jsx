@@ -1,138 +1,78 @@
-import React, { useContext } from 'react';
-import { Text, View, StyleSheet, TextInput, ScrollView } from 'react-native';
-import UserContext from '../contexts/UserContext';
-import { RadioButton, Button } from 'react-native-paper';
-import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
+import React from 'react';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import EnIcon from 'react-native-vector-icons/Entypo';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AppStyle from '../AppStyle';
+import Button from '../components/Button';
+import Dropdown from '../components/Dropdown';
 
-
-const NewListingScreen = () => {
-    const { user } = useContext(UserContext);
-    const [checked, setChecked] = React.useState('');
-    const [description, setDescription] = React.useState('');
-    const [category, setCategory] = React.useState('');
-    const [price, setPrice] = React.useState('');
-
-    const text = "test";
-    const press = () => {
-        alert('button pressed');
-        alert(description);
-        alert(checked);
-        alert(category);
-        alert(price);
-        setDescription('');
-        setChecked("first");
-        setCategory('');
-        setPrice(0);
+const types = [
+    {
+        label: "Ticket", value: "ticket", icon: "ticket", options: [
+            { label: "Football", value: "football", icon: "football" },
+            { label: "Basketball", value: "basketball", icon: "basketball" },
+            { label: "Hockey", value: "hockey", icon: "hockey-puck" }
+        ]
+    },
+    {
+        label: "Textbook", value: "textbook", icon: "book", options: [
+            { label: "Mathematics", value: "math", icon: "calculator" },
+            { label: "History", value: "history", icon: "book-open-page-variant" },
+            { label: "Science", value: "science", icon: "flask" },
+            { label: "Foreign Language", value: "language", icon: "earth" }
+        ]
+    },
+    {
+        label: "Other/Misc.", value: "other", icon: "box", options: [
+            { label: "Sublease", value: "sublease", icon: "file-document-outline" },
+            { label: "Parking Spot", value: "parking", icon: "car" },
+            { label: "Electronics", value: "electronics", icon: "laptop" },
+            { label: "Other Object", value: "object", icon: "cube-outline" }
+        ]
     }
+];
 
-    const Category = () => {
-        return (
-            <View style={styles.categories}>
-            <Text>Category</Text>
-            <TextInput 
-                style={styles.categoryfields}
-                value={category}
-                onChangeText={setCategory}
-                placeholder="Category"
-    
-            />
-            </View>
-        );
-    }
-
-    //TextInput onchange (calls function on every key stroke) & value props
-    // store value from onChange to state 
-
-    //define new state variables for each TextInput
+const NewListingScreen = ({ navigation }) => {
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.sectionheaders}>Add Description</Text>
-            <TextInput 
-                style={styles.textfields}
-                value={description}
-                placeholder="Description"
-                onChangeText={setDescription}
-            />
-            
+        <ScrollView>
+            <Text style={[AppStyle.classes.header, { marginHorizontal: 10, marginVertical: 20 }]}>
+                What would you like to sell?
+            </Text>
 
             <Text style={styles.sectionheaders}>Type</Text>
-            <View style={styles.radiobutton}><Text>Tickets</Text><RadioButton
-                value="first"
-                status={ checked === 'first' ? 'checked' : 'unchecked' }
-                onPress={() => setChecked('first')}
-                color="#00274C"
-                uncheckedColor='#EAE8E4'
-            /></View>
-
             {
-                ( checked === 'first') && Category()
+                types.map((type, i) => (
+                    <Dropdown
+                        topBorder={i === 0}
+                        title={(
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <EnIcon name={type.icon} size={26} color="black" style={{ marginRight: 10 }} />
+                                <Text style={{ fontSize: 18, paddingVertical: 10 }}>{type.label}</Text>
+                            </View>
+                        )}
+                    >
+                        {type.options.map(cat => (
+                            <View style={styles.buttonWrapper}>
+                                <Button
+                                    label={"  " + cat.label}
+                                    icon={<MCIcon name={cat.icon} size={18} color="white" />}
+                                    filled
+                                    bold
+                                    onPress={() =>
+                                        navigation.navigate("Listing Form", { category: cat, type: type.value })
+                                    }
+                                />
+                            </View>
+                        ))}
+                        <View style={{ width: '100%', height: 20 }} />
+                    </Dropdown>
+                ))
             }
-
-            
-            <View style={styles.radiobutton}><Text>Textbooks</Text><RadioButton
-                value="second"
-                status={ checked === 'second' ? 'checked' : 'unchecked' }
-                onPress={() => setChecked('second')}
-                color="#00274C"
-                uncheckedColor='#EAE8E4'
-            /></View>
-
-            {   
-                ( checked === 'second') && Category()
-            }
-
-            <View style={styles.radiobutton}><Text>Other</Text><RadioButton
-                value="third"
-                status={ checked === 'third' ? 'checked' : 'unchecked' }
-                onPress={() => setChecked('third')}
-                color="#00274C"
-                uncheckedColor='#EAE8E4'
-            /></View>
-            {
-                ( checked === 'third') && Category()
-            }
-            
-
-            <Text style={styles.sectionheaders}>Price</Text>
-            <TextInput 
-                style={styles.textfields}
-                value={price}
-                keyboardType='numeric'
-                onChangeText={setPrice}
-                placeholder="$$"
-                maxLength={10}
-            />
-            
-            <View style={styles.buttonboi}><Button onPress={press} icon="card-plus" mode="contained" color="#FFCB05">
-                Create Listing
-            </Button></View>
-            
         </ScrollView>
-        
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        //width: '50%',
-        //marginLeft: '25%',
-    },
-
-    radiobutton: {
-        flexDirection: 'row', 
-        width: '100%', 
-        height: 70,
-        borderTopWidth: 1,
-        padding: 8,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        color: '#EAE8E4',
-    },
-
     sectionheaders: {
         fontSize: 12,
         fontWeight: "900",
@@ -140,40 +80,21 @@ const styles = StyleSheet.create({
         marginBottom: 4,
         marginLeft: 8,
     },
-
-    categories: {
-        paddingLeft: 32,
-        fontSize: 10,
-        fontWeight: '200',
-        marginTop: 16,
-        marginBottom: 16,
-        width: '75%',
-    },
-
     textfields: {
-        height: 40, 
-        width: '75%', 
-        borderColor: '#00274C', 
-        borderWidth: 1, 
+        height: 40,
+        width: '75%',
+        borderColor: '#00274C',
+        borderWidth: 1,
         //backgroundColor: '#D3D3D3', 
-        padding:4,
+        padding: 4,
         textShadowColor: 'rgba(0, 0, 0, 0.75)',
         marginLeft: 8,
     },
-
-    categoryfields: {
-        height: 40, 
-        width: '100%', 
-        borderColor: '#00274C', 
-        borderWidth: 1, 
-        //backgroundColor: '#D3D3D3', 
-        padding:4,
-        textShadowColor: 'rgba(0, 0, 0, 0.75)',
-        marginLeft: 8,
-    },
-
-    buttonboi: {
-        margin: 16,
+    buttonWrapper: {
+        width: '50%',
+        marginVertical: 5,
+        marginLeft: 'auto',
+        marginRight: 'auto'
     }
 });
 
