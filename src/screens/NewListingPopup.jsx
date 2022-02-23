@@ -47,14 +47,10 @@ const NewListingPopup = ({ navigation, route }) => {
     }
 
     const submitDisabled = !price || !title || waiting;
-    const typeRender = type === "other" ? categoryLabel : type;
 
     return (
         <ScrollView style={styles.rootContainer} keyboardShouldPersistTaps="handled" scrollEnabled={false}>
-            <Text style={[AppStyle.classes.header, styles.caps]}>Selling {typeRender}</Text>
-            {type !== "other" && (
-                <Text style={[styles.caps, { marginTop: 10 }]}>Category: {categoryLabel}</Text>
-            )}
+            <Text style={[AppStyle.classes.header, styles.caps]}>Selling {categoryLabel} {type !== "other" && type}</Text>
 
             <Text style={styles.sectionheaders}>
                 {type === "ticket" ? "Opponent Name" : "Item Name"}
