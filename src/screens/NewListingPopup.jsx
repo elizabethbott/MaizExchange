@@ -10,7 +10,13 @@ const NewListingPopup = ({ navigation, route }) => {
     const [description, setDescription] = useState('');
     const [waiting, setWaiting] = useState(false);
 
-    const { category, type } = route.params;
+    const {
+        category: {
+            label: categoryLabel,
+            value: categoryValue
+        },
+        type
+    } = route.params;
 
     const processPriceInput = p => {
         p = p.replace("$", "").replace(" ", "");
@@ -31,7 +37,7 @@ const NewListingPopup = ({ navigation, route }) => {
         await postListing({
             title,
             price: parseFloat(finalPrice),
-            category,
+            category: categoryValue,
             type,
             description
         });
@@ -41,13 +47,13 @@ const NewListingPopup = ({ navigation, route }) => {
     }
 
     const submitDisabled = !price || !title || waiting;
-    const typeRender = type === "other" ? category : type;
+    const typeRender = type === "other" ? categoryLabel : type;
 
     return (
         <ScrollView style={styles.rootContainer} keyboardShouldPersistTaps="handled" scrollEnabled={false}>
             <Text style={[AppStyle.classes.header, styles.caps]}>Selling {typeRender}</Text>
             {type !== "other" && (
-                <Text style={[styles.caps, { marginTop: 10 }]}>Category: {category}</Text>
+                <Text style={[styles.caps, { marginTop: 10 }]}>Category: {categoryLabel}</Text>
             )}
 
             <Text style={styles.sectionheaders}>

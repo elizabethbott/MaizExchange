@@ -59,7 +59,7 @@ const NewListingScreen = ({ navigation }) => {
                                     filled
                                     bold
                                     onPress={() =>
-                                        navigation.navigate("Listing Form", { category: cat.value, type: type.value })
+                                        navigation.navigate("Listing Form", { category: cat, type: type.value })
                                     }
                                 />
                             </View>
