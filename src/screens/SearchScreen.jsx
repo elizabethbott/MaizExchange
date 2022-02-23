@@ -12,7 +12,7 @@ const NewListingScreen = ({ navigation }) => {
 
             <Text style={styles.sectionheaders}>Type</Text>
             <ItemTypeSelector onSelect={({ category, type }) =>
-                navigation.navigate("Search Results", { category, type })
+                navigation.navigate("Search Results", { category: category.value, type })
             } />
         </ScrollView>
     );
