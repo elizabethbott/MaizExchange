@@ -11,7 +11,13 @@ const NewListingPopup = ({ navigation, route }) => {
     const [description, setDescription] = useState('');
     const [waiting, setWaiting] = useState(false);
 
-    const { category, type } = route.params;
+    const {
+        category: {
+            label: categoryLabel,
+            value: categoryValue
+        },
+        type
+    } = route.params;
 
     const onSubmit = async () => {
         setWaiting(true);
@@ -20,7 +26,7 @@ const NewListingPopup = ({ navigation, route }) => {
         await postListing({
             title,
             price: parseFloat(price),
-            category,
+            category: categoryValue,
             type,
             description
         });
@@ -30,14 +36,10 @@ const NewListingPopup = ({ navigation, route }) => {
     };
 
     const submitDisabled = !price || !title || waiting;
-    const typeRender = type === "other" ? category : type;
 
     return (
         <ScrollView style={styles.rootContainer} keyboardShouldPersistTaps="handled" scrollEnabled={false}>
-            <Text style={[AppStyle.classes.header, styles.caps]}>Selling {typeRender}</Text>
-            {type !== "other" && (
-                <Text style={[styles.caps, { marginTop: 10 }]}>Category: {category}</Text>
-            )}
+            <Text style={[AppStyle.classes.header, styles.caps]}>Selling {categoryLabel} {type !== "other" && type}</Text>
 
             <Text style={styles.sectionheaders}>
                 {type === "ticket" ? "Opponent Name" : "Item Name"}

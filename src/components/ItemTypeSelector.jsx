@@ -15,10 +15,10 @@ const types = [
     },
     {
         label: "Textbook", value: "textbook", icon: "book", options: [
-            { label: "Mathematics", value: "math", icon: "book-open-page-variant" },
+            { label: "Mathematics", value: "math", icon: "calculator" },
             { label: "History", value: "history", icon: "book-open-page-variant" },
-            { label: "Science", value: "science", icon: "book-open-page-variant" },
-            { label: "Foreign Language", value: "language", icon: "book-open-page-variant" }
+            { label: "Science", value: "science", icon: "flask" },
+            { label: "Foreign Language", value: "language", icon: "earth" }
         ]
     },
     {
@@ -50,7 +50,7 @@ const ItemTypeSelector = ({ onSelect }) => {
                             icon={<MCIcon name={cat.icon} size={18} color="white" />}
                             filled
                             bold
-                            onPress={() => onSelect({ category: cat.value, type: type.value })}
+                            onPress={() => onSelect({ category: cat, type: type.value })}
                         />
                     </View>
                 ))}
