@@ -32,6 +32,7 @@ const HomeScreen = () => {
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
             <ScrollView>
                 <HeaderComponent />
                 <View >
@@ -54,6 +55,7 @@ const HomeScreen = () => {
 
                 </View>
             </ScrollView>
+
         </View>
     );
 };

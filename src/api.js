@@ -1,5 +1,5 @@
-// const API_URL = "http://ec2-18-118-95-190.us-east-2.compute.amazonaws.com:3000";
-const API_URL = "http://localhost:3000";
+const API_URL = "http://ec2-18-118-95-190.us-east-2.compute.amazonaws.com:3000";
+// const API_URL = "http://localhost:3000";
 
 const request = async (endpoint, body, headers = {}) => {
     const res = await fetch(API_URL + endpoint, {
