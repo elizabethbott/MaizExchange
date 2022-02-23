@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { searchListings } from '../api';
+import SearchBar from '../components/SearchBar';
+import useDebounce from '../hooks/useDebounce';
 
 const WideListingCard = ({ listing, onPress }) => {
     const { title, first_name, last_name, price, type, category } = listing;
@@ -9,8 +11,8 @@ const WideListingCard = ({ listing, onPress }) => {
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             <Image source={require('../../assets/favicon.png')} resizeMode="cover" style={styles.image} />
-            <View style={{ paddingVertical: 10, justifyContent: 'space-between' }}>
-                <Text style={{ fontWeight: 'bold' }} numberOfLines={1}>
+            <View style={{ paddingVertical: 15, justifyContent: 'space-between' }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 18, textTransform: 'capitalize' }} numberOfLines={1}>
                     {title} {type === "ticket" && `${category} ticket`}
                 </Text>
                 <Text numberOfLines={1}>
@@ -27,17 +29,29 @@ const WideListingCard = ({ listing, onPress }) => {
 
 const SearchResultsScreen = ({ route }) => {
     const [listings, setListings] = useState(null);
+    const [maxPrice, setMaxPrice] = useState('');
+    const [sort, setSort] = useState('recent');
+    const [searchInput, setSearchInput] = useState('');
+
+    const debouncedSearchInput = useDebounce(searchInput);
+    const debouncedPriceInput = useDebounce(maxPrice);
 
     const { category, type } = route.params;
 
     const fetchListings = async () => {
-        const { listings: newListings } = await searchListings({ category, type });
+        const { listings: newListings } = await searchListings({
+            category,
+            type,
+            sort,
+            searchTerm: debouncedSearchInput,
+            maxPrice: debouncedPriceInput
+        });
         setListings(newListings);
-    }
+    };
 
     useEffect(() => {
         if (category && type) fetchListings();
-    }, [category, type]);
+    }, [category, type, sort, debouncedSearchInput, debouncedPriceInput]);
 
     const FillerText = () => (
         <View style={{ marginTop: 100, marginHorizontal: 20 }}>
@@ -49,6 +63,14 @@ const SearchResultsScreen = ({ route }) => {
 
     return (
         <ScrollView>
+            <SearchBar
+                sort={sort}
+                setSort={setSort}
+                maxPrice={maxPrice}
+                setMaxPrice={setMaxPrice}
+                searchInput={searchInput}
+                setSearchInput={setSearchInput}
+            />
             {
                 (listings && listings.length > 0) ? listings.map(listing => (
                     <WideListingCard listing={listing} />
@@ -68,8 +90,8 @@ const styles = StyleSheet.create({
         margin: 10
     },
     image: {
-        height: 75,
-        width: 75,
+        height: 85,
+        width: 85,
         marginRight: 10
     },
     chevron: {

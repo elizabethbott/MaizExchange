@@ -3,6 +3,7 @@ import { Keyboard, ScrollView, StyleSheet, Text, TextInput, View } from 'react-n
 import { postListing } from '../api';
 import AppStyle from '../AppStyle';
 import Button from '../components/Button';
+import PriceInput from '../components/PriceInput';
 
 const NewListingPopup = ({ navigation, route }) => {
     const [title, setTitle] = useState('');
@@ -12,25 +13,13 @@ const NewListingPopup = ({ navigation, route }) => {
 
     const { category, type } = route.params;
 
-    const processPriceInput = p => {
-        p = p.replace("$", "").replace(" ", "");
-        setPrice(p);
-    };
-
-    const onPriceBlur = () => {
-        const roundedPrice = parseFloat(price).toFixed(2);
-        if (roundedPrice === "NaN") return "";
-        setPrice(roundedPrice);
-        return roundedPrice;
-    };
-
     const onSubmit = async () => {
         setWaiting(true);
-        const finalPrice = onPriceBlur();
+        // Todo: blur the price field, make sure that it's gone through formatting
         Keyboard.dismiss();
         await postListing({
             title,
-            price: parseFloat(finalPrice),
+            price: parseFloat(price),
             category,
             type,
             description
@@ -38,7 +27,7 @@ const NewListingPopup = ({ navigation, route }) => {
         setWaiting(false);
         navigation.goBack();
         // TODO: Better feedback that the posting was listed
-    }
+    };
 
     const submitDisabled = !price || !title || waiting;
     const typeRender = type === "other" ? category : type;
@@ -62,15 +51,7 @@ const NewListingPopup = ({ navigation, route }) => {
             <View>
                 <Text style={styles.sectionheaders}>Price</Text>
             </View>
-            <TextInput
-                style={[styles.textfields, { width: 100 }]}
-                value={"$ " + price}
-                keyboardType='numeric'
-                onChangeText={processPriceInput}
-                onBlur={onPriceBlur}
-                maxLength={8}
-
-            />
+            <PriceInput price={price} setPrice={setPrice} />
 
             {type !== "ticket" && (
                 <>
