@@ -46,12 +46,22 @@ const HomeScreen = () => {
                             <ListingView list={tickets} />
                         </View>
                      )}     
+                    {textbooks.length > 0 && (
+                     <View>
+                     <ListingHeader category="Textbooks" />
+                     <ListingView list={textbooks} />
+                 </View> 
 
-                    <ListingHeader category={textbooks.length != 0 ? `${textbooks[0]['type']}` : ""} />
-                    {textbooks.length != 0 ? <ListingView list={textbooks} /> : null}
+                    )}
+                    
+                    {other.length > 0 && (
+                        <View>
+                        <ListingHeader category="Other" />
+                        <ListingView list={other} />
+                        </View> 
 
-                    <ListingHeader category={other.length != 0 ? `${other[0]['type']}` : ""} />
-                    {other.length != 0 ? <ListingView list={other} /> : null}
+                    )}
+                    
 
                 </View>
             </ScrollView>
