@@ -16,10 +16,10 @@ const types = [
     },
     {
         label: "Textbook", value: "textbook", icon: "book", options: [
-            { label: "Mathematics", value: "math", icon: "book-open-page-variant" },
+            { label: "Mathematics", value: "math", icon: "calculator" },
             { label: "History", value: "history", icon: "book-open-page-variant" },
-            { label: "Science", value: "science", icon: "book-open-page-variant" },
-            { label: "Foreign Language", value: "language", icon: "book-open-page-variant" }
+            { label: "Science", value: "science", icon: "flask" },
+            { label: "Foreign Language", value: "language", icon: "earth" }
         ]
     },
     {
