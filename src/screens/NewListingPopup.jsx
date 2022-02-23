@@ -19,10 +19,7 @@ const NewListingPopup = ({ navigation, route }) => {
         type
     } = route.params;
 
-    const onSubmit = async () => {
-        setWaiting(true);
-        // Todo: blur the price field, make sure that it's gone through formatting
-        Keyboard.dismiss();
+    const finalizeSubmit = async () => {
         await postListing({
             title,
             price: parseFloat(price),
@@ -33,6 +30,13 @@ const NewListingPopup = ({ navigation, route }) => {
         setWaiting(false);
         navigation.goBack();
         // TODO: Better feedback that the posting was listed
+    };
+
+    const onSubmit = async () => {
+        setWaiting(true);
+        Keyboard.dismiss();
+        // This is probably poor practice but we need the price formatter to do its magic first
+        setTimeout(finalizeSubmit, 50);
     };
 
     const submitDisabled = !price || !title || waiting;
