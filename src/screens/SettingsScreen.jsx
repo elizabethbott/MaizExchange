@@ -1,18 +1,18 @@
 import React, { useContext } from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 import ExampleComponent from '../components/ExampleComponent';
 import UserContext from '../contexts/UserContext';
-import userlogo from '../images/userlogo.png';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const SettingsScreen = () => {
     const { user } = useContext(UserContext);
     
     return (
         <View style={styles.container}>
-            <Text>Example screen for profile - hello world!</Text>
-            <ExampleComponent />
+            {/* <Text>Example screen for profile - hello world!</Text> */}
+            {/* <ExampleComponent /> */}
             <br></br>
-            <img style={{width: '100px', height: '100px',}} src={userlogo} alt="this is user image" />
+            <Icon name={`person-circle`} size={200} color={'#0000FF'} />
             <Text style={styles.sectionheaders}>{user.firstName} {user.lastName}</Text>
             <Text style={styles.sectionheaders}>Contact: {user.email}</Text>
         </View>
