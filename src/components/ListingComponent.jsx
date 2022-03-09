@@ -34,9 +34,8 @@ const styles = StyleSheet.create({
     container: {
         //backgroundColor: 'red',
         alignContent: "center",
-        fontFamily: "Inter",
         fontSize: 14,
-        fontWeight: 400,
+        fontWeight: "400",
         padding: 15
 
     },

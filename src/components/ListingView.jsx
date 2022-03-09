@@ -22,7 +22,6 @@ const ListingView = (props) => {
 const styles = StyleSheet.create({
     container: {
         //backgroundColor: 'red',
-        fontFamily: "Inter",
         //whenn actually looping through real results this will have to just affect the listigs not the titles
         flexDirection: 'row',
         justifyContent: 'flex-end',
