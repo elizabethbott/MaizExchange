@@ -1,3 +1,4 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { searchListings } from '../api';
@@ -5,7 +6,7 @@ import SearchBar from '../components/SearchBar';
 import WideListingCard from '../components/WideListingCard';
 import useDebounce from '../hooks/useDebounce';
 
-const SearchResultsScreen = ({ route }) => {
+const SearchResultsScreen = ({ route, navigation }) => {
     const [listings, setListings] = useState(null);
     const [maxPrice, setMaxPrice] = useState('');
     const [sort, setSort] = useState('recent');
@@ -51,7 +52,7 @@ const SearchResultsScreen = ({ route }) => {
             />
             {
                 (listings && listings.length > 0) ? listings.map(listing => (
-                    <WideListingCard listing={listing} />
+                    <WideListingCard listing={listing} onPress={navigation.navigate("Item Information", { category: category.value, type })}/>
                 )) : (
                     <FillerText />
                 )
