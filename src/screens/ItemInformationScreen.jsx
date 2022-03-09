@@ -1,27 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
-import { searchListings } from '../api';
-import SearchBar from '../components/SearchBar';
-import WideListingCard from '../components/WideListingCard';
-import useDebounce from '../hooks/useDebounce';
+import { Text, StyleSheet, ScrollView , View} from 'react-native';
+import AppStyle from '../AppStyle';
+import Button from '../components/Button';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ItemInformationScreen = ({ route, navigation }) => {
-    const { title, first_name, last_name, price, type, category } = listing;
+    const { title, first_name, last_name, price, type, category } = route.params.listing;
     
     return (
         <ScrollView>
-            <Text>
+            <Text style={[AppStyle.classes.header, { marginHorizontal: 10, marginVertical: 20 }]}>
                 {title}
             </Text> 
-            <Text>
+            <Text style={styles.sectionheaders}>
                 Seller: {first_name} {last_name}
             </Text>
-            <Text>
-                {price}
+            <Text style={styles.priceStyle}>
+                ${price.toFixed(2)}
             </Text>
-            <Text>
-                
-            </Text>
+            <Button
+                label={"purchase"}
+                icon={<MCIcon name={"currency-usd"} size={18} color="white" />}
+                filled
+                bold
+            />
         </ScrollView>
     );
 };
+
+const styles = StyleSheet.create({
+    sectionheaders: {
+        fontSize: 18,
+        fontWeight: "900",
+        marginTop: 16,
+        marginBottom: 4,
+        marginLeft: 8,
+    },
+
+    priceStyle: {
+        fontWeight: 'bold',
+        marginLeft: 9,
+        fontSize: 18,
+    }
+});
+
+export default ItemInformationScreen;
