@@ -3,6 +3,7 @@ import { Keyboard, ScrollView, StyleSheet, Text, TextInput, View } from 'react-n
 import { postListing } from '../api';
 import AppStyle from '../AppStyle';
 import Button from '../components/Button';
+import PriceInput from '../components/PriceInput';
 
 const NewListingPopup = ({ navigation, route }) => {
     const [title, setTitle] = useState('');
@@ -18,25 +19,10 @@ const NewListingPopup = ({ navigation, route }) => {
         type
     } = route.params;
 
-    const processPriceInput = p => {
-        p = p.replace("$", "").replace(" ", "");
-        setPrice(p);
-    };
-
-    const onPriceBlur = () => {
-        const roundedPrice = parseFloat(price).toFixed(2);
-        if (roundedPrice === "NaN") return "";
-        setPrice(roundedPrice);
-        return roundedPrice;
-    };
-
-    const onSubmit = async () => {
-        setWaiting(true);
-        const finalPrice = onPriceBlur();
-        Keyboard.dismiss();
+    const finalizeSubmit = async () => {
         await postListing({
             title,
-            price: parseFloat(finalPrice),
+            price: parseFloat(price),
             category: categoryValue,
             type,
             description
@@ -44,7 +30,14 @@ const NewListingPopup = ({ navigation, route }) => {
         setWaiting(false);
         navigation.goBack();
         // TODO: Better feedback that the posting was listed
-    }
+    };
+
+    const onSubmit = async () => {
+        setWaiting(true);
+        Keyboard.dismiss();
+        // This is probably poor practice but we need the price formatter to do its magic first
+        setTimeout(finalizeSubmit, 50);
+    };
 
     const submitDisabled = !price || !title || waiting;
 
@@ -64,15 +57,7 @@ const NewListingPopup = ({ navigation, route }) => {
             <View>
                 <Text style={styles.sectionheaders}>Price</Text>
             </View>
-            <TextInput
-                style={[styles.textfields, { width: 100 }]}
-                value={"$ " + price}
-                keyboardType='numeric'
-                onChangeText={processPriceInput}
-                onBlur={onPriceBlur}
-                maxLength={8}
-
-            />
+            <PriceInput price={price} setPrice={setPrice} />
 
             {type !== "ticket" && (
                 <>

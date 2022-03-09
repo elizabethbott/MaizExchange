@@ -1,34 +1,31 @@
-import React, { useContext } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import LogInOrOutButton from '../components/LogInOrOutButton';
-import UserContext from '../contexts/UserContext';
+import React from 'react';
+import { Text, StyleSheet, ScrollView } from 'react-native';
+import AppStyle from '../AppStyle';
+import ItemTypeSelector from '../components/ItemTypeSelector';
 
-const SearchScreen = () => {
-    const { user } = useContext(UserContext);
-
-    /*return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>
-                {user ? `Logged in as ${user.firstName} ${user.lastName}` :
-                    "Log in with your UMich Google account:"}
-            </Text>
-            <LogInOrOutButton />
-        </View>
-    );*/
+const NewListingScreen = ({ navigation }) => {
     return (
-        <View style={styles.container}>
-            <Text>Search Page</Text>
-        </View>
+        <ScrollView>
+            <Text style={[AppStyle.classes.header, { marginHorizontal: 10, marginVertical: 20 }]}>
+                What are you looking to buy?
+            </Text>
+
+            <Text style={styles.sectionheaders}>Type</Text>
+            <ItemTypeSelector onSelect={({ category, type }) =>
+                navigation.navigate("Search Results", { category: category.value, type })
+            } />
+        </ScrollView>
     );
-}
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+    sectionheaders: {
+        fontSize: 12,
+        fontWeight: "900",
+        marginTop: 16,
+        marginBottom: 4,
+        marginLeft: 8,
+    }
 });
 
-export default SearchScreen;
+export default NewListingScreen;

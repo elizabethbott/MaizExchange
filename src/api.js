@@ -17,7 +17,6 @@ const request = async (endpoint, body, headers = {}) => {
     return res.json();
 };
 
-// TODO: export API functions here
 export const testApi = async () => {
     const res = await request('/users/add', { user: { name: "Poopyhead", id: "abc" } });
     console.log(res);
@@ -25,7 +24,7 @@ export const testApi = async () => {
 
 export const logInOrSignUp = async (accessToken) => {
     return request('/auth/logInOrSignUp', { accessToken });
-}
+};
 
 
 export const getListings = async () => {
@@ -54,5 +53,19 @@ export const postListing = async ({
     return request('/listings', {
         title, price, type, category, description
     });
-}
+
+
+export const searchListings = async ({
+    searchTerm,
+    maxPrice,
+    sort = "recent",
+    page = 0,
+    type,
+    category
+}) => {
+    const queryParams = { type, category, sort, page };
+    if (searchTerm) queryParams.searchTerm = searchTerm;
+    if (maxPrice) queryParams.maxPrice = maxPrice;
+    return request(`/listings?${(new URLSearchParams(queryParams)).toString()}`);
+};
 
