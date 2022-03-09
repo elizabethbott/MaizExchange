@@ -29,17 +29,11 @@ export default function App() {
                 <NavigationContainer>
                     {user ? (
                         <Tab.Navigator screenOptions={{ headerShown: false }}>
-                            <Tab.Screen name="Home" component={HomeRoute} options={{
-                                tabBarIcon: ({ focused }) => <TabIcon name={`home${!focused ? '-outline' : ''}`} focused={focused} />
-                            }} />
                             <Tab.Screen name="Search" component={SearchRoute} options={{
                                 tabBarIcon: ({ focused }) => <TabIcon name={`search-circle-${!focused ? 'outline' : 'sharp'}`} focused={focused} />
                             }} />
                             <Tab.Screen name="New Listing" component={NewListingRoute} options={{
                                 tabBarIcon: ({ focused }) => <TabIcon name={`ios-create${!focused ? '-outline' : ''}`} focused={focused} />
-                            }} />
-                            <Tab.Screen name="Notifications" component={NotificationsRoute} options={{
-                                tabBarIcon: ({ focused }) => <TabIcon name={`notifications${!focused ? '-outline' : ''}`} focused={focused} />
                             }} />
                             <Tab.Screen name="Settings" component={SettingsRoute} options={{
                                 tabBarIcon: ({ focused }) => <TabIcon name={`person-circle${!focused ? '-outline' : ''}`} focused={focused} />
@@ -54,4 +48,35 @@ export default function App() {
             </SafeAreaProvider>
         </UserContext.Provider>
     );
+    // return (
+    //     <UserContext.Provider value={{ user, setUser }}>
+    //         <SafeAreaProvider>
+    //             <NavigationContainer>
+    //                 {user ? (
+    //                     <Tab.Navigator screenOptions={{ headerShown: false }}>
+    //                         <Tab.Screen name="Home" component={HomeRoute} options={{
+    //                             tabBarIcon: ({ focused }) => <TabIcon name={`home${!focused ? '-outline' : ''}`} focused={focused} />
+    //                         }} />
+    //                         <Tab.Screen name="Search" component={SearchRoute} options={{
+    //                             tabBarIcon: ({ focused }) => <TabIcon name={`search-circle-${!focused ? 'outline' : 'sharp'}`} focused={focused} />
+    //                         }} />
+    //                         <Tab.Screen name="New Listing" component={NewListingRoute} options={{
+    //                             tabBarIcon: ({ focused }) => <TabIcon name={`ios-create${!focused ? '-outline' : ''}`} focused={focused} />
+    //                         }} />
+    //                         <Tab.Screen name="Notifications" component={NotificationsRoute} options={{
+    //                             tabBarIcon: ({ focused }) => <TabIcon name={`notifications${!focused ? '-outline' : ''}`} focused={focused} />
+    //                         }} />
+    //                         <Tab.Screen name="Settings" component={SettingsRoute} options={{
+    //                             tabBarIcon: ({ focused }) => <TabIcon name={`person-circle${!focused ? '-outline' : ''}`} focused={focused} />
+    //                         }} />
+    //                     </Tab.Navigator>
+    //                 ) : (
+    //                     <Stack.Navigator screenOptions={{ headerShown: false }}>
+    //                         <Stack.Screen name="Login" component={LoginScreen} />
+    //                     </Stack.Navigator>
+    //                 )}
+    //             </NavigationContainer>
+    //         </SafeAreaProvider>
+    //     </UserContext.Provider>
+    // );
 }
