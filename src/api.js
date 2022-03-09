@@ -53,6 +53,7 @@ export const postListing = async ({
     return request('/listings', {
         title, price, type, category, description
     });
+}
 
 
 export const searchListings = async ({
@@ -68,4 +69,5 @@ export const searchListings = async ({
     if (maxPrice) queryParams.maxPrice = maxPrice;
     return request(`/listings?${(new URLSearchParams(queryParams)).toString()}`);
 };
+
 
