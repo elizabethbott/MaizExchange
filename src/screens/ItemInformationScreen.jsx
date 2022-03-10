@@ -20,7 +20,7 @@ const ItemInformationScreen = ({ route, navigation }) => {
             </Text>
             <Button
                 label={"purchase"}
-                icon={<MCIcon name={"currency-usd"} size={18} color="white" />}
+                icon={<MCIcon name={"store-plus"} size={18} color="white" />}
                 filled
                 bold
             />
