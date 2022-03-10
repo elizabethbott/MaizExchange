@@ -9,7 +9,6 @@ const ItemInformationScreen = ({ route, navigation }) => {
     
     
     const purchase = () => {
-        console.log("heyy ;)");
         Alert.alert(
             "Purchase Clicked",
             "Would you like to purchase this item?",
@@ -18,6 +17,10 @@ const ItemInformationScreen = ({ route, navigation }) => {
                     text: "Yes",
                     onPress: () => {
                         console.log("Yes pressed");
+                        Alert.alert(
+                            "Item pruchased",
+                            "An email confirmation has been sent to both you and the seller. \n\nYou will communicate via email to determine an exchange date and payment method."
+                        )
                         navigation.goBack()
                     }
                 },
