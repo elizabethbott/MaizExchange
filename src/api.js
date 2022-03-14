@@ -51,3 +51,7 @@ export const searchListings = async ({
     if (maxPrice) queryParams.maxPrice = maxPrice;
     return request(`/listings?${(new URLSearchParams(queryParams)).toString()}`);
 };
+
+export const startListingSale = async (listingId) => {
+    return request(`/listings/${listingId}/startPurchase`, {});
+}
