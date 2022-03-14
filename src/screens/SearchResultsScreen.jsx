@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { searchListings } from '../api';
 import SearchBar from '../components/SearchBar';
 import WideListingCard from '../components/WideListingCard';
 import useDebounce from '../hooks/useDebounce';
 
-const SearchResultsScreen = ({ route }) => {
+const SearchResultsScreen = ({ route, navigation }) => {
     const [listings, setListings] = useState(null);
     const [maxPrice, setMaxPrice] = useState('');
     const [sort, setSort] = useState('recent');
@@ -27,9 +28,11 @@ const SearchResultsScreen = ({ route }) => {
         setListings(newListings);
     };
 
-    useEffect(() => {
-        if (category && type) fetchListings();
-    }, [category, type, sort, debouncedSearchInput, debouncedPriceInput]);
+    useFocusEffect(
+        useCallback(() => {
+            if (category && type) fetchListings();
+        }, [category, type, sort, debouncedSearchInput, debouncedPriceInput])
+    );
 
     const FillerText = () => (
         <View style={{ marginTop: 100, marginHorizontal: 20 }}>
@@ -51,7 +54,9 @@ const SearchResultsScreen = ({ route }) => {
             />
             {
                 (listings && listings.length > 0) ? listings.map(listing => (
-                    <WideListingCard listing={listing} />
+                    <WideListingCard listing={listing} key={listing.id} onPress={() =>
+                        navigation.navigate("Item Information", { listing })
+                    } />
                 )) : (
                     <FillerText />
                 )

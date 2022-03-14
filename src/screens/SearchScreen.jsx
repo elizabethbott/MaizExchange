@@ -3,7 +3,7 @@ import { Text, StyleSheet, ScrollView } from 'react-native';
 import AppStyle from '../AppStyle';
 import ItemTypeSelector from '../components/ItemTypeSelector';
 
-const NewListingScreen = ({ navigation }) => {
+const SearchScreen = ({ navigation }) => {
     return (
         <ScrollView>
             <Text style={[AppStyle.classes.header, { marginHorizontal: 10, marginVertical: 20 }]}>
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default NewListingScreen;
+export default SearchScreen;
