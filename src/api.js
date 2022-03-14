@@ -14,7 +14,11 @@ const request = async (endpoint, body, headers = {}) => {
             ...headers
         }
     });
-    return res.json();
+    try {
+        return res.json();
+    } catch (e) {
+        return {}
+    }
 };
 
 export const testApi = async () => {
