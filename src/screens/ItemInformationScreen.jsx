@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { Image, Text, StyleSheet, ScrollView , View, Alert} from 'react-native';
+import React from 'react';
+import { Image, Text, StyleSheet, ScrollView, View, Alert } from 'react-native';
 import AppStyle from '../AppStyle';
 import Button from '../components/Button';
+import alert from '../util/alert';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { startListingSale } from '../api';
 
 const ItemInformationScreen = ({ route, navigation }) => {
-    const { title, first_name, last_name, price, type, category } = route.params.listing;
-    
-    
+    const { id, title, first_name, last_name, price, type, category } = route.params.listing;
+
+    const executePurchase = async () => {
+        await startListingSale(id);
+        alert(
+            "Item purchased",
+            "An email confirmation has been sent to both you and the seller. Please communicate with the seller via email to determine an exchange date and payment method."
+        );
+        navigation.goBack();
+    }
+
     const purchase = () => {
-        Alert.alert(
+        alert(
             "Purchase Clicked",
             "Would you like to purchase this item?",
             [
                 {
                     text: "Yes",
-                    onPress: () => {
-                        console.log("Yes pressed");
-                        Alert.alert(
-                            "Item pruchased",
-                            "An email confirmation has been sent to both you and the seller. \n\nYou will communicate via email to determine an exchange date and payment method."
-                        )
-                        navigation.goBack()
-                    }
+                    onPress: executePurchase
                 },
                 {
                     text: "Cancel",
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                 }
-              ]
+            ]
         );
     }
 
@@ -37,7 +40,7 @@ const ItemInformationScreen = ({ route, navigation }) => {
         <ScrollView>
             <Text style={[AppStyle.classes.header, { marginHorizontal: 10, marginVertical: 20 }]}>
                 {category} {type} for <Text>{title}</Text>
-            </Text> 
+            </Text>
             <Image source={require('../../assets/favicon.png')} resizeMode="cover" style={styles.image} />
             <Text style={styles.sectionheaders}>
                 Seller: {first_name} {last_name}
@@ -46,15 +49,14 @@ const ItemInformationScreen = ({ route, navigation }) => {
                 ${price.toFixed(2)}
             </Text>
             <View style={styles.buttonwrapper}>
-            <Button
-                label={"Purchase"}
-                icon={<MCIcon name={"currency-usd"} size={18} color="white" />}
-                filled
-                bold
-                onPress={purchase}
-            />
+                <Button
+                    label={"Purchase"}
+                    icon={<MCIcon name={"currency-usd"} size={18} color="white" />}
+                    filled
+                    bold
+                    onPress={purchase}
+                />
             </View>
-            
         </ScrollView>
     );
 };
