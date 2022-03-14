@@ -4,6 +4,7 @@ import EnIcon from 'react-native-vector-icons/Entypo';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from './Button';
 import Dropdown from './Dropdown';
+import IconMap from '../util/icons';
 
 const types = [
     {
@@ -48,7 +49,7 @@ const ItemTypeSelector = ({ onSelect }) => {
                     <View style={styles.buttonWrapper} key={cat.label}>
                         <Button
                             label={"  " + cat.label}
-                            icon={<MCIcon name={cat.icon} size={18} color="white" />}
+                            icon={<MCIcon name={IconMap[cat.value]} size={18} color="white" />}
                             filled
                             bold
                             onPress={() => onSelect({ category: cat, type: type.value })}

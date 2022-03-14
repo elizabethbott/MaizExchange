@@ -1,10 +1,11 @@
 import React from 'react';
-import { Image, Text, StyleSheet, ScrollView, View, Alert } from 'react-native';
+import { Text, StyleSheet, ScrollView, View, Alert } from 'react-native';
 import AppStyle from '../AppStyle';
 import Button from '../components/Button';
 import alert from '../util/alert';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { startListingSale } from '../api';
+import IconMap from '../util/icons';
 
 const ItemInformationScreen = ({ route, navigation }) => {
     const { id, title, first_name, last_name, price, type, category } = route.params.listing;
@@ -41,7 +42,7 @@ const ItemInformationScreen = ({ route, navigation }) => {
             <Text style={[AppStyle.classes.header, { marginHorizontal: 10, marginVertical: 20 }]}>
                 {category} {type} for <Text>{title}</Text>
             </Text>
-            <Image source={require('../../assets/favicon.png')} resizeMode="cover" style={styles.image} />
+            <MCIcon name={IconMap[category]} size={48} color="black" />
             <Text style={styles.sectionheaders}>
                 Seller: {first_name} {last_name}
             </Text>

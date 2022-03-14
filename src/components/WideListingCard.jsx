@@ -1,13 +1,15 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconMap from '../util/icons';
 
 const WideListingCard = ({ listing, onPress }) => {
     const { title, first_name, last_name, price, type, category } = listing;
 
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
-            <Image source={require('../../assets/favicon.png')} resizeMode="cover" style={styles.image} />
+            <MCIcon name={IconMap[category]} style={styles.icon} size={52} color="black" />
             <View style={{ paddingVertical: 15, justifyContent: 'space-between' }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 18, textTransform: 'capitalize' }} numberOfLines={1}>
                     {title} {type === "ticket" && `${category} ticket`}
@@ -28,8 +30,9 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: '#d6d6d6',
+        alignItems: 'center',
         borderRadius: 10,
-        margin: 10
+        margin: 10,
     },
     image: {
         height: 85,
@@ -40,6 +43,10 @@ const styles = StyleSheet.create({
         marginLeft: 'auto',
         justifyContent: 'center',
         marginRight: 10
+    },
+    icon: {
+        paddingLeft: 4,
+        paddingRight: 4
     }
 });
 
