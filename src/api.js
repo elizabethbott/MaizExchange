@@ -15,14 +15,15 @@ const request = async (endpoint, body, headers = {}) => {
         }
     });
     try {
-        return res.json();
+        const json = await res.json();
+        return json;
     } catch (e) {
         return {}
     }
 };
 
 export const testApi = async () => {
-    const res = await request('/users/add', { user: { name: "Poopyhead", id: "abc" } });
+    const res = await request('/status');
     console.log(res);
 };
 
