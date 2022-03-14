@@ -1,6 +1,6 @@
-import { NavigationContainer } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { searchListings } from '../api';
 import SearchBar from '../components/SearchBar';
 import WideListingCard from '../components/WideListingCard';
@@ -28,9 +28,11 @@ const SearchResultsScreen = ({ route, navigation }) => {
         setListings(newListings);
     };
 
-    useEffect(() => {
-        if (category && type) fetchListings();
-    }, [category, type, sort, debouncedSearchInput, debouncedPriceInput]);
+    useFocusEffect(
+        useCallback(() => {
+            if (category && type) fetchListings();
+        }, [category, type, sort, debouncedSearchInput, debouncedPriceInput])
+    );
 
     const FillerText = () => (
         <View style={{ marginTop: 100, marginHorizontal: 20 }}>
