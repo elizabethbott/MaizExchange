@@ -39,8 +39,8 @@ const ItemInformationScreen = ({ route, navigation }) => {
 
     return (
         <ScrollView>
-            <Text style={[AppStyle.classes.header, { marginHorizontal: 10, marginVertical: 20 }]}>
-                {category} {type} for <Text>{title}</Text>
+            <Text style={[AppStyle.classes.header, styles.title]}>
+                {category} {type}: <Text>{title}</Text>
             </Text>
             <MCIcon name={IconMap[category]} size={48} color="black" />
             <Text style={styles.sectionheaders}>
@@ -68,7 +68,11 @@ const styles = StyleSheet.create({
         width: 85,
         marginLeft: 8
     },
-
+    title: {
+        marginHorizontal: 10,
+        marginVertical: 20,
+        textTransform: 'capitalize'
+    },
     sectionheaders: {
         fontSize: 18,
         fontWeight: "900",
