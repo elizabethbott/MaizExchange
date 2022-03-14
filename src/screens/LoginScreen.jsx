@@ -24,10 +24,15 @@ const LoginScreen = () => {
     const { accessToken } = useSavedAccessToken();
 
     const tryAccessToken = async () => {
-        const user = await logInOrSignUp(accessToken);
-        if (user.result !== "error") {
-            setUser(user);
-        } else setReady(true);
+        try {
+            const user = await logInOrSignUp(accessToken);
+            if (user.result !== "error") {
+                setUser(user);
+            } else setReady(true);
+        } catch (e) {
+            console.log(e);
+            setReady(true);
+        }
     };
 
     useEffect(() => {

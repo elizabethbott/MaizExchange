@@ -14,11 +14,16 @@ const request = async (endpoint, body, headers = {}) => {
             ...headers
         }
     });
-    return res.json();
+    try {
+        const json = await res.json();
+        return json;
+    } catch (e) {
+        return {}
+    }
 };
 
 export const testApi = async () => {
-    const res = await request('/users/add', { user: { name: "Poopyhead", id: "abc" } });
+    const res = await request('/status');
     console.log(res);
 };
 
@@ -51,3 +56,7 @@ export const searchListings = async ({
     if (maxPrice) queryParams.maxPrice = maxPrice;
     return request(`/listings?${(new URLSearchParams(queryParams)).toString()}`);
 };
+
+export const startListingSale = async (listingId) => {
+    return request(`/listings/${listingId}/startPurchase`, {});
+}

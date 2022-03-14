@@ -29,14 +29,17 @@ export default function App() {
                 <NavigationContainer>
                     {user ? (
                         <Tab.Navigator screenOptions={{ headerShown: false }}>
-                            <Tab.Screen name="Search" component={SearchRoute} options={{
-                                tabBarIcon: ({ focused }) => <TabIcon name={`search-circle-${!focused ? 'outline' : 'sharp'}`} focused={focused} />
+                            <Tab.Screen name="SearchTab" component={SearchRoute} options={{
+                                tabBarIcon: ({ focused }) => <TabIcon name={`search-circle-${!focused ? 'outline' : 'sharp'}`} focused={focused} />,
+                                title: "Search"
                             }} />
-                            <Tab.Screen name="New Listing" component={NewListingRoute} options={{
-                                tabBarIcon: ({ focused }) => <TabIcon name={`ios-create${!focused ? '-outline' : ''}`} focused={focused} />
+                            <Tab.Screen name="ListingTab" component={NewListingRoute} options={{
+                                tabBarIcon: ({ focused }) => <TabIcon name={`ios-create${!focused ? '-outline' : ''}`} focused={focused} />,
+                                title: "New Listing"
                             }} />
-                            <Tab.Screen name="Settings" component={SettingsRoute} options={{
-                                tabBarIcon: ({ focused }) => <TabIcon name={`person-circle${!focused ? '-outline' : ''}`} focused={focused} />
+                            <Tab.Screen name="SettingsTab" component={SettingsRoute} options={{
+                                tabBarIcon: ({ focused }) => <TabIcon name={`person-circle${!focused ? '-outline' : ''}`} focused={focused} />,
+                                title: "Settings"
                             }} />
                         </Tab.Navigator>
                     ) : (
