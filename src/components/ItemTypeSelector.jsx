@@ -36,6 +36,7 @@ const ItemTypeSelector = ({ onSelect }) => {
         types.map((type, i) => (
             <Dropdown
                 topBorder={i === 0}
+                key={type.label}
                 title={(
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <EnIcon name={type.icon} size={26} color="black" style={{ marginRight: 10 }} />
@@ -44,7 +45,7 @@ const ItemTypeSelector = ({ onSelect }) => {
                 )}
             >
                 {type.options.map(cat => (
-                    <View style={styles.buttonWrapper}>
+                    <View style={styles.buttonWrapper} key={cat.label}>
                         <Button
                             label={"  " + cat.label}
                             icon={<MCIcon name={cat.icon} size={18} color="white" />}

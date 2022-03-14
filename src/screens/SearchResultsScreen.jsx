@@ -54,7 +54,7 @@ const SearchResultsScreen = ({ route, navigation }) => {
             />
             {
                 (listings && listings.length > 0) ? listings.map(listing => (
-                    <WideListingCard listing={listing} onPress={() =>
+                    <WideListingCard listing={listing} key={listing.id} onPress={() =>
                         navigation.navigate("Item Information", { listing })
                     } />
                 )) : (
