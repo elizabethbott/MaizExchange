@@ -10,7 +10,7 @@ const WideListingCard = ({ listing, onPress }) => {
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             <MCIcon name={IconMap[category]} style={styles.icon} size={52} color="black" />
-            <View style={{ paddingVertical: 15, justifyContent: 'space-between' }}>
+            <View style={{ paddingVertical: 15, justifyContent: 'space-between', height: 80 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 18, textTransform: 'capitalize' }} numberOfLines={1}>
                     {title} {type === "ticket" && `${category} ticket`}
                 </Text>
