@@ -238,6 +238,8 @@ function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, truckID }) {
     const [image, setImage] = useState("");
     const { user } = useContext(UserContext);
 
+    const sendDisabled = !text && !image;
+
     function submitChat() {
         if (text.length === 0 && !image) return;
         onChatSubmit();
@@ -316,7 +318,11 @@ function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, truckID }) {
                     value={image ? "<1 image>" : text}
                 />
             </View>
-            <TouchableOpacity style={styles.sendButton} onPress={submitChat}>
+            <TouchableOpacity
+                style={[styles.sendButton, sendDisabled && { backgroundColor: "#CCC" }]}
+                onPress={submitChat}
+                disabled={sendDisabled}
+            >
                 <Text style={styles.sendArrow}>↑</Text>
             </TouchableOpacity>
         </View>
