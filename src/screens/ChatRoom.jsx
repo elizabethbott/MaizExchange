@@ -20,8 +20,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     messageContainer: {
-        marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 17,
         alignSelf: "flex-start",
         maxWidth: "75%",
         flexDirection: "row",
@@ -45,8 +44,8 @@ const styles = StyleSheet.create({
     bubble: {
         backgroundColor: "#DDD",
         padding: 10,
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: 13,
+        paddingRight: 13,
         borderRadius: 15,
         borderBottomLeftRadius: 0,
         maxWidth: "100%"
@@ -94,33 +93,40 @@ const styles = StyleSheet.create({
     },
     typeBoxContainer: {
         flexDirection: "row",
-        width: "100%",
+        alignItems: "flex-end",
+        width: "100%"
     },
-    typeBox: {
-        borderRadius: 20,
-        padding: 10,
-        backgroundColor: "#CCC",
-        margin: 6,
+    inputContainer: {
+        marginTop: 5,
+        marginBottom: 5,
         flex: 1,
         flexGrow: 1,
+        borderRadius: 20,
+        backgroundColor: "#CCC",
+        alignSelf: "stretch",
+        justifyContent: "center",
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 10,
+        paddingRight: 10
+    },
+    input: {
+        paddingTop: 0,
+        paddingBottom: 0
     },
     sendButton: {
         width: 35,
         height: 35,
         backgroundColor: AppStyle.colors.blue,
         borderRadius: 40,
-        marginRight: 6,
-        marginTop: "auto",
-        marginBottom: "auto",
+        margin: 5
     },
     imageButton: {
         width: 35,
         height: 35,
         backgroundColor: "#CCC",
         borderRadius: 40,
-        marginRight: 6,
-        marginTop: "auto",
-        marginBottom: "auto",
+        margin: 5
     },
     sendArrow: {
         marginTop: "auto",
@@ -129,7 +135,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: "bold",
         fontSize: 23,
-        marginLeft: 1,
+        marginLeft: 1
     },
     imageIcon: {
         marginTop: "auto",
@@ -229,7 +235,6 @@ function ChatMsg(props) {
 function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, truckID }) {
     const [text, setText] = useState("");
     const [enabled, setEnabled] = useState(true);
-    const [textHeight, setTextHeight] = useState(0);
     const [image, setImage] = useState("");
     const { user } = useContext(UserContext);
 
@@ -277,7 +282,6 @@ function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, truckID }) {
                     />
                 </View>
             }
-            <View style={{ width: 10 }} />
             {Platform.OS != "web" &&
                 <TouchableOpacity style={styles.imageButton} onPress={() => {
                     Keyboard.dismiss();
@@ -292,25 +296,26 @@ function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, truckID }) {
             }}>
                 <Image style={styles.imageIcon} source={require("../../assets/picture.png")} />
             </TouchableOpacity>
-            <TextInput
-                style={[styles.typeBox, { minHeight: Platform.OS === "ios" ? 31 : 36, height: textHeight + 0 }]}
-                onContentSizeChange={e => setTextHeight(Math.min(250, e.nativeEvent.contentSize.height))}
-                onChangeText={t => {
-                    if (image) {
-                        setText("");
-                        setImage("");
-                    } else setText(t);
-                }}
-                editable={enabled}
-                placeholder={"Send a message..."}
-                placeholderTextColor={"#888"}
-                multiline
-                blurOnSubmit
-                enablesReturnKeyAutomatically
-                returnKeyType={"send"}
-                onSubmitEditing={submitChat}
-                value={image ? "<1 image>" : text}
-            />
+            <View style={styles.inputContainer}>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={t => {
+                        if (image) {
+                            setText("");
+                            setImage("");
+                        } else setText(t);
+                    }}
+                    editable={enabled}
+                    placeholder={"Send a message..."}
+                    placeholderTextColor={"#888"}
+                    multiline
+                    blurOnSubmit
+                    enablesReturnKeyAutomatically
+                    returnKeyType={"send"}
+                    onSubmitEditing={submitChat}
+                    value={image ? "<1 image>" : text}
+                />
+            </View>
             <TouchableOpacity style={styles.sendButton} onPress={submitChat}>
                 <Text style={styles.sendArrow}>↑</Text>
             </TouchableOpacity>
