@@ -4,6 +4,11 @@ import { StyleSheet, TextInput } from 'react-native';
 const PriceInput = ({ price, setPrice, style: customStyle }) => {
     const processPriceInput = p => {
         p = p.replace("$", "").replace(" ", "");
+        if (p > 1000) {
+            p = 1000;
+        } else if (p < 0) {
+            p = 0;
+        }
         setPrice(p);
     };
 

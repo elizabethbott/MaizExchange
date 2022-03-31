@@ -10,6 +10,7 @@ const NewListingPopup = ({ navigation, route }) => {
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const [waiting, setWaiting] = useState(false);
+    const [condition, setCondition] = useState('');
 
     const {
         category: {
@@ -25,7 +26,8 @@ const NewListingPopup = ({ navigation, route }) => {
             price: parseFloat(price),
             category: categoryValue,
             type,
-            description
+            description,
+            condition
         });
         setWaiting(false);
         navigation.goBack();
@@ -55,7 +57,7 @@ const NewListingPopup = ({ navigation, route }) => {
             />
 
             <View>
-                <Text style={styles.sectionheaders}>Price</Text>
+                <Text style={styles.sectionheaders}>Price ($0-$1000)</Text>
             </View>
             <PriceInput price={price} setPrice={setPrice} />
 
@@ -67,6 +69,19 @@ const NewListingPopup = ({ navigation, route }) => {
                         value={description}
                         placeholder="Describe the item you're selling..."
                         onChangeText={setDescription}
+                        multiline
+                    />
+                </>
+            )}
+
+            {type === "textbook" && (
+                <>
+                    <Text style={styles.sectionheaders}>Condition</Text>
+                    <TextInput 
+                        style={[styles.textfields, {height: 40}]}
+                        value={condition}
+                        placeholder="Describe the condition of the item..."
+                        onChangeText={setCondition}
                         multiline
                     />
                 </>
