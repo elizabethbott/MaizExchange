@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Keyboard, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { postListing } from '../api';
 import AppStyle from '../AppStyle';
+import alert from '../util/alert';
 import Button from '../components/Button';
 import PriceInput from '../components/PriceInput';
 
@@ -30,6 +31,10 @@ const NewListingPopup = ({ navigation, route }) => {
             condition
         });
         setWaiting(false);
+        alert(
+            "Item posted",
+            "Your listing has successfully been posted"
+        );
         navigation.goBack();
         // TODO: Better feedback that the posting was listed
     };
