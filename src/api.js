@@ -36,10 +36,11 @@ export const postListing = async ({
     price,
     type,
     category,
-    description
+    description,
+    condition
 }) => {
     return request('/listings', {
-        title, price, type, category, description
+        title, price, type, category, description, condition
     });
 };
 
