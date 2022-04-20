@@ -29,10 +29,6 @@ export default function App() {
                 <NavigationContainer>
                     {user ? (
                         <Tab.Navigator screenOptions={{ headerShown: false }}>
-                            <Tab.Screen name="HomeTab" component={HomeRoute} options={{
-                                tabBarIcon: ({ focused }) => <TabIcon name={`home${!focused ? '-outline' : ''}`} focused={focused} />,
-                                title: "Home"
-                            }} />
                             <Tab.Screen name="SearchTab" component={SearchRoute} options={{
                                 tabBarIcon: ({ focused }) => <TabIcon name={`search-circle-${!focused ? 'outline' : 'sharp'}`} focused={focused} />,
                                 title: "Search"
@@ -45,10 +41,6 @@ export default function App() {
                                 tabBarIcon: ({ focused }) => <TabIcon name={`chatbubbles${!focused ? '-outline' : ''}`} focused={focused} />,
                                 title: "Conversations"
                             }} />
-                            <Tab.Screen name="SettingsTab" component={SettingsRoute} options={{
-                                tabBarIcon: ({ focused }) => <TabIcon name={`person-circle${!focused ? '-outline' : ''}`} focused={focused} />,
-                                title: "Settings"
-                            }} />
                         </Tab.Navigator>
                     ) : (
                         <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -60,3 +52,15 @@ export default function App() {
         </UserContext.Provider>
     );
 }
+
+/*
+ <Tab.Screen name="HomeTab" component={HomeRoute} options={{
+                                tabBarIcon: ({ focused }) => <TabIcon name={`home${!focused ? '-outline' : ''}`} focused={focused} />,
+                                title: "Home"
+                            }} />
+
+<Tab.Screen name="SettingsTab" component={SettingsRoute} options={{
+                                tabBarIcon: ({ focused }) => <TabIcon name={`person-circle${!focused ? '-outline' : ''}`} focused={focused} />,
+                                title: "Settings"
+                            }} />
+*/
