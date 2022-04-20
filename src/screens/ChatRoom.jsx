@@ -9,6 +9,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import UserContext from '../contexts/UserContext';
 import AppStyle from '../AppStyle';
 import KeyboardDodger from '../components/KeyboardDodger';
+import { getMessages, sendMessage } from '../api';
 // import ScaledImage from "components/ScaledImage";
 // import RealKAV from 'components/RealKeyboardAvoidingView';
 // import { HeaderBackButton } from '@react-navigation/stack';
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#BBB",
         marginLeft: 4,
         marginRight: 4,
+        marginTop: 5
     },
     personIconText: {
         alignSelf: "center",
@@ -165,7 +167,7 @@ const styles = StyleSheet.create({
 });
 
 const Config = {
-    BEGINNING_MSG: "This is the beginning of the chat history.",
+    BEGINNING_MSG: "",
     MAX_CHATS_PER_BATCH: 15,    // Max chats to be retrieved per fetch. This must match the server's batch size!!
     DEFAULT_REFRESH_INTERVAL: 10000,    // Milliseconds to wait before fetching chat updates at the fastest interval
     MEDIUM_REFRESH_INTERVAL: 25000,   // Milliseconds to wait before fetching chat updates at a medium pace
@@ -175,17 +177,10 @@ const Config = {
     CHAT_IMAGE_PREFIX: "_IMG_"
 };
 
-// FOR TESTING ONLY
-const hitAPI = async (endpoint, body, resolve, reject) => {
-    await new Promise(r => setTimeout(r, 1000));
-    if (endpoint === "getChats") {
-        if (body.before || body.after) resolve([]);
-        resolve([
-            { ID: 6, author: "Joel", lastName: "Rummel", message: "Not much, how you doin? Can I buy my ticket yet or nah", timestamp: new Date().getTime() / 1000 },
-            { ID: 5, author: "Aidan", lastName: "Haase", message: "Hey joel whats up", timestamp: (new Date().getTime() / 1000) - 1000 }
-        ]);
-    }
-};
+function getStandardTimeString(d) {
+    return (d.getHours() == 12 ? "12" : d.getHours() % 12) + ":" + (d.getMinutes() >= 10 ? "" : "0") + (d.getMinutes()) + (d.getHours() >= 12 ? "pm" : "am");
+}
+
 const ScaledImage = () => <></>;
 const NonBlockingLoader = () => <View style={{ flex: 1 }}><Text>Loading...</Text></View>;
 const ErrorNotifier = ({ msg }) => <Text>{msg ? `Oopsie: ${msg}` : ""}</Text>;
@@ -193,14 +188,14 @@ const ErrorNotifier = ({ msg }) => <Text>{msg ? `Oopsie: ${msg}` : ""}</Text>;
 function ChatMsg(props) {
     const { user } = useContext(UserContext);
 
-    const isMe = user.firstName == props.author && user.lastName == props.authorLastName;
+    const isMe = user.firstName == props.author && user.lastName == props.lastName;
     let dateStr = "";
     if (props.timestamp) {
         const d = new Date(props.timestamp * 1000);
-        //if (new Date().toDateString() == d.toDateString())
-        // dateStr = getStandardTimeString(d);
-        //else
-        dateStr = d.toLocaleDateString();
+        if (new Date().toDateString() == d.toDateString())
+            dateStr = getStandardTimeString(d);
+        else
+            dateStr = d.toLocaleDateString();
     }
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -219,10 +214,10 @@ function ChatMsg(props) {
     ) : (
         <Animated.View style={[styles.messageContainer, !isMe ? {} : styles.myMessageContainer, { opacity: fadeAnim }]}>
             <View style={[styles.personIcon, !isMe ? {} : styles.hide]}>
-                <Text style={styles.personIconText}>{props.author[0].toUpperCase()}{props.authorLastName[0].toUpperCase()}</Text>
+                <Text style={styles.personIconText}>{props.author[0].toUpperCase()}{props.lastName[0].toUpperCase()}</Text>
             </View>
             <View style={[styles.bubble, !isMe ? {} : styles.myBubble, props.message.startsWith(Config.CHAT_IMAGE_PREFIX) ? { /**/ } : {}]}>
-                <Text style={[styles.author, !isMe ? {} : styles.myAuthor]}>{isMe ? "You" : props.author + " " + props.authorLastName} • {dateStr}</Text>
+                <Text style={[styles.author, !isMe ? {} : styles.myAuthor]}>{isMe ? "You" : props.author + " " + props.lastName} • {dateStr}</Text>
                 {props.message.startsWith(Config.CHAT_IMAGE_PREFIX) ?
                     <ScaledImage uri={SERVER_PATH + props.message.replace(Config.CHAT_IMAGE_PREFIX, "")} maxWidth={(props.windowWidth - 64) / 1.2} /> :
                     <Text style={[!isMe ? {} : styles.myMessage]}>{props.message}</Text>
@@ -232,7 +227,7 @@ function ChatMsg(props) {
     );
 }
 
-function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, truckID }) {
+function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, listingId, otherId }) {
     const [text, setText] = useState("");
     const [enabled, setEnabled] = useState(true);
     const [image, setImage] = useState("");
@@ -240,7 +235,7 @@ function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, truckID }) {
 
     const sendDisabled = !text && !image;
 
-    function submitChat() {
+    async function submitChat() {
         if (text.length === 0 && !image) return;
         onChatSubmit();
         let tempText = text;
@@ -249,15 +244,16 @@ function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, truckID }) {
         setImage("");
         setEnabled(false);
         // Disable the text field until we get a response back
-        hitAPI("submitChat", { truckID: truckID, token: user.userToken, message: tempText, image: tempImage }, ({ chatID, message }) => {
-            onChatSucceed(message, chatID);
+        try {
+            const { newId, message } = await sendMessage(listingId, otherId, tempText);
+            onChatSucceed(message, newId);
             setEnabled(true);
-        }, () => {
+        } catch (e) {
             setEnabled(true);
             setText(tempText);
             setImage(tempImage);
             onChatFailed();
-        });
+        }
     }
 
     return (
@@ -300,6 +296,7 @@ function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, truckID }) {
             </TouchableOpacity>
             <View style={styles.inputContainer}>
                 <TextInput
+                    hitSlop={{ top: 15, bottom: 15 }}
                     style={styles.input}
                     onChangeText={t => {
                         if (image) {
@@ -339,6 +336,9 @@ export default function ChatRoom({ navigation, route }) {
     const [chatWindowRefreshTimer, setRefreshTimer] = useState(null);
     const [errorMsg, setErrorMsg] = useState("");
 
+    console.log(route);
+    const { otherId, listingId, title, firstName, lastName } = route.params;
+
     const lciRef = useRef(latestChatID);
     lciRef.current = latestChatID; // i still hate closures
 
@@ -353,12 +353,30 @@ export default function ChatRoom({ navigation, route }) {
     useEffect(() => {
         // Assume that we are in an alternate chat window
         navigation.setOptions({
-            title: "Hello i am title",
+            title: `${firstName} ${lastName} (${title})`,
             headerStyle: { backgroundColor: AppStyle.colors.blue },
             headerTitleStyle: { color: "white" },
-            headerBackTitleStyle: { color: "white" }
+            headerBackTitleStyle: { color: "white" },
         });
-    });
+    }, []);
+
+    const hitAPI = async (endpoint, body, resolve, reject) => {
+        if (endpoint === "getChats") {
+            const { messages } = await getMessages(listingId, otherId, { before: body.before, after: body.after });
+            resolve(messages.map(message => {
+                const isIssue = (!message.sender_id);
+                const isMine = (message.sender_id == user.id);
+                return {
+                    ID: message.id,
+                    timestamp: new Date(new Date(message.timestamp).getTime() / 1000),
+                    author: isMine ? user.firstName : firstName,
+                    lastName: isMine ? user.lastName : lastName,
+                    message: message.message,
+                    isIssue
+                };
+            }));
+        }
+    };
 
     const resetPollTimer = (lastTimestamp = 0) => {
         let millisecs = Config.DEFAULT_REFRESH_INTERVAL;
@@ -418,7 +436,7 @@ export default function ChatRoom({ navigation, route }) {
             const newDate = new Date(c[i].timestamp * 1000).toDateString();
             if (newDate != currentDate || c[i].message == Config.BEGINNING_MSG) {
                 if (c[i - 1].ID != c[i].ID + 0.5)
-                    c.splice(i, 0, { ID: c[i].ID + 0.5, author: "", authorLastName: "", isIssue: true, message: currentDate });
+                    c.splice(i, 0, { ID: c[i].ID + 0.5, author: "", lastName: "", isIssue: true, message: currentDate });
                 currentDate = newDate;
             }
         }
@@ -431,7 +449,7 @@ export default function ChatRoom({ navigation, route }) {
         hitAPI("getChats", { token: user.userToken, truckID: truckID }, data => {
             if (data.length < Config.MAX_CHATS_PER_BATCH) {
                 setCanGetMoreChats(false);
-                data.push({ ID: 0, author: "", authorLastName: "", isIssue: true, message: Config.BEGINNING_MSG })
+                data.push({ ID: 0, author: "", lastName: "", isIssue: true, message: Config.BEGINNING_MSG })
             }
             data = insertDateHeaders(data);
             setChats([...data]);
@@ -476,7 +494,7 @@ export default function ChatRoom({ navigation, route }) {
                             hitAPI("getChats", { token: user.userToken, truckID: truckID, before: chats[chats.length - 1].ID }, data => {
                                 if (data.length < Config.MAX_CHATS_PER_BATCH) {
                                     setCanGetMoreChats(false);
-                                    data.push({ ID: 0, author: "", authorLastName: "", isIssue: true, message: "This is the beginning of the chat history." })
+                                    data.push({ ID: 0, author: "", lastName: "", isIssue: true, message: "This is the beginning of the chat history." })
                                 }
                                 setChats(oldChats => {
                                     for (var i = 0; i < oldChats.length; i++)
@@ -493,13 +511,14 @@ export default function ChatRoom({ navigation, route }) {
                         keyboardDismissMode={Platform.OS == "ios" ? "interactive" : "on-drag"}
                         onScrollEndDrag={Platform.OS == "android" ? Keyboard.dismiss : () => { }}
                         keyExtractor={(item, index) => (item.ID).toString()}
-                        renderItem={({ item }) => <ChatMsg author={item.author} authorLastName={item.lastName} message={item.message} isIssue={item.isIssue} timestamp={item.timestamp} windowWidth={finalWidth} />}
+                        renderItem={({ item }) => <ChatMsg author={item.author} lastName={item.lastName} message={item.message} isIssue={item.isIssue} timestamp={item.timestamp} windowWidth={finalWidth} />}
                     />}
                 <ChatInput
-                    truckID={truckID}
+                    listingId={listingId}
+                    otherId={otherId}
                     onChatSucceed={(newText, newID) => {
                         resetPollTimer(); // go back to fast mode
-                        setChats(oldChats => insertDateHeaders([{ author: user.userFirstName, lastName: user.userLastName, message: newText, ID: newID, timestamp: Math.round(new Date().getTime() / 1000) }, ...(oldChats.filter(c => c.ID != newID))]));
+                        setChats(oldChats => insertDateHeaders([{ author: user.firstName, lastName: user.lastName, message: newText, ID: newID, timestamp: Math.round(new Date().getTime() / 1000) }, ...(oldChats.filter(c => c.ID != newID))]));
                     }}
                     onChatFailed={() => {
                         setErrorMsg("Connection error - failed to send message");

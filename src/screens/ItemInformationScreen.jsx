@@ -17,10 +17,10 @@ const ItemInformationScreen = ({ route, navigation }) => {
         await startListingSale(id);
         alert(
             "Item purchased",
-            "An email confirmation has been sent to both you and the seller. Please communicate with the seller via email to determine an exchange date and payment method."
+            "An email confirmation has been sent to both you and the seller. Please chat with the seller to determine an exchange date and payment method."
         );
         setWaitingPurchase(false);
-        navigation.goBack();
+        navigation.navigate("NotificationsTab");
     }
 
     const purchase = () => {

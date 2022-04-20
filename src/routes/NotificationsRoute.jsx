@@ -7,7 +7,8 @@ const Stack = createStackNavigator();
 
 const NotificationsRoute = () => (
     <Stack.Navigator>
-        <Stack.Screen name="Notifications Screen" component={ChatRoom} />
+        <Stack.Screen name="Notifications Screen" component={NotificationsScreen} />
+        <Stack.Screen name="Chat Screen" component={ChatRoom} />
     </Stack.Navigator>
 );
 

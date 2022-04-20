@@ -42,8 +42,8 @@ export default function App() {
                                 title: "New Listing"
                             }} />
                             <Tab.Screen name="NotificationsTab" component={NotificationsRoute} options={{
-                                tabBarIcon: ({ focused }) => <TabIcon name={`notifications${!focused ? '-outline' : ''}`} focused={focused} />,
-                                title: "Notifications"
+                                tabBarIcon: ({ focused }) => <TabIcon name={`chatbubbles${!focused ? '-outline' : ''}`} focused={focused} />,
+                                title: "Conversations"
                             }} />
                             <Tab.Screen name="SettingsTab" component={SettingsRoute} options={{
                                 tabBarIcon: ({ focused }) => <TabIcon name={`person-circle${!focused ? '-outline' : ''}`} focused={focused} />,

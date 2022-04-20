@@ -60,3 +60,15 @@ export const searchListings = async ({
 export const startListingSale = async (listingId) => {
     return request(`/listings/${listingId}/startPurchase`, {});
 }
+
+export const getConversations = async () => {
+    return request('/messages/conversations');
+};
+
+export const getMessages = async (listingId, otherId, { before, after }) => {
+    return request(`/messages/${listingId}/${otherId}`, { before: before || undefined, after: after || undefined });
+};
+
+export const sendMessage = async (listingId, otherId, message) => {
+    return request(`/messages/${listingId}/${otherId}/send`, { message });
+}

@@ -1,35 +1,76 @@
-import React, { useContext } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import LogInOrOutButton from '../components/LogInOrOutButton';
-import UserContext from '../contexts/UserContext';
+import React, { useCallback, useState } from 'react';
+import { Text, TouchableOpacity, View, ScrollView, StyleSheet } from 'react-native';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
-const NotificationsScreen = () => {
-    const { user } = useContext(UserContext);
+import IconMap from '../util/icons';
+import { getConversations } from '../api';
+import { useFocusEffect } from '@react-navigation/native';
 
-    /*return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>
-                {user ? `Logged in as ${user.firstName} ${user.lastName}` :
-                    "Log in with your UMich Google account:"}
-            </Text>
-            <LogInOrOutButton />
-        </View>
-    );*/
+
+const ConversationButton = ({ firstName, lastName, latestMsg, latestTimestamp, title, category, onPress }) => {
     return (
-        <View style={styles.container}>
-            <Text>Notifications Page</Text>
-            <Icon name="home-outline" />
-        </View>
+        <TouchableOpacity style={styles.buttonRoot} onPress={onPress}>
+            <MCIcon name={IconMap[category]} size={50} color="black" style={{ marginRight: 10 }} />
+            <View style={{ flex: 1 }}>
+                <Text numberOfLines={1}><Text style={{ fontWeight: "bold" }}>{firstName} {lastName}</Text> - {title}</Text>
+                <Text numberOfLines={1} style={{ color: 'gray' }}>{latestMsg}</Text>
+            </View>
+            <Icon name="chevron-forward-outline" size={20} color="black" style={{ marginLeft: 10 }} />
+        </TouchableOpacity>
+    );
+};
+
+const NotificationsScreen = ({ navigation }) => {
+    const [conversations, setConversations] = useState([]);
+
+    // const { user } = useContext(UserContext);
+
+    const fetchConversations = async () => {
+        const result = await getConversations();
+        setConversations(result.conversations);
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchConversations();
+        }, [])
+    );
+
+    return (
+        <ScrollView>
+            {conversations.map(conversation => (
+                <ConversationButton
+                    title={conversation.listingInfo.title}
+                    firstName={conversation.userInfo.first_name}
+                    lastName={conversation.userInfo.last_name}
+                    latestMsg={conversation.latestMsg}
+                    latestTimestamp={conversation.latestTimestamp}
+                    category={conversation.listingInfo.category}
+                    onPress={() => navigation.navigate("Chat Screen", {
+                        listingId: conversation.listingInfo.id,
+                        otherId: conversation.userInfo.id,
+                        amIBuyer: conversation.amIBuyer,
+                        title: conversation.listingInfo.title,
+                        firstName: conversation.userInfo.first_name,
+                        lastName: conversation.userInfo.last_name,
+                    })}
+                />
+            ))}
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
+    buttonRoot: {
+        width: '100%',
+        flexDirection: 'row',
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
+        paddingLeft: 10,
+        paddingRight: 10,
         alignItems: 'center',
-        justifyContent: 'center',
-    },
+        height: 80
+    }
 });
 
 export default NotificationsScreen;
