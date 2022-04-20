@@ -288,12 +288,6 @@ function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, listingId, other
                     <Image style={styles.imageIcon} source={require("../../assets/camera.png")} />
                 </TouchableOpacity>
             }
-            <TouchableOpacity style={styles.imageButton} onPress={() => {
-                Keyboard.dismiss();
-                setTimeout(() => pickImage(i => { setImage(i); setText(""); }), 100);
-            }}>
-                <Image style={styles.imageIcon} source={require("../../assets/picture.png")} />
-            </TouchableOpacity>
             <View style={styles.inputContainer}>
                 <TextInput
                     hitSlop={{ top: 15, bottom: 15 }}
@@ -531,3 +525,10 @@ export default function ChatRoom({ navigation, route }) {
         </KeyboardDodger>
     );
 }
+
+
+/*<TouchableOpacity style={styles.imageButton} onPress={() => {
+                Keyboard.dismiss();
+                setTimeout(() => pickImage(i => { setImage(i); setText(""); }), 100);
+            }}><Image style={styles.imageIcon} source={require("../../assets/picture.png")} />
+            </TouchableOpacity> */
