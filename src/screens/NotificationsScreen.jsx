@@ -56,6 +56,13 @@ const NotificationsScreen = ({ navigation }) => {
                     })}
                 />
             ))}
+            {conversations.length === 0 && (
+                <View style={{ marginTop: 100, marginHorizontal: 20 }}>
+                    <Text style={{ color: 'darkgray', textAlign: 'center' }}>
+                        Chat rooms will appear here once you begin to buy or sell something with someone.
+                    </Text>
+                </View>
+            )}
         </ScrollView>
     );
 }
