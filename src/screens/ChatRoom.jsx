@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         marginTop: 5,
         marginBottom: 5,
+        marginLeft: 5,
         flex: 1,
         flexGrow: 1,
         borderRadius: 20,
@@ -279,14 +280,6 @@ function ChatInput({ onChatSucceed, onChatFailed, onChatSubmit, listingId, other
                     }}
                     />
                 </View>
-            }
-            {Platform.OS != "web" &&
-                <TouchableOpacity style={styles.imageButton} onPress={() => {
-                    Keyboard.dismiss();
-                    setTimeout(() => openCamera(i => { setImage(i); setText(""); }), 100);
-                }}>
-                    <Image style={styles.imageIcon} source={require("../../assets/camera.png")} />
-                </TouchableOpacity>
             }
             <View style={styles.inputContainer}>
                 <TextInput
