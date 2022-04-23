@@ -2,7 +2,7 @@
   "expo": {
     "name": "maizexchange",
     "slug": "maizexchange",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "maize",
@@ -19,7 +19,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.joelrummel.maizexchange"
+      "bundleIdentifier": "com.maizexchange.jrummel",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
