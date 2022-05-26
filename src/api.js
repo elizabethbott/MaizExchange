@@ -31,6 +31,23 @@ export const logInOrSignUp = async (accessToken) => {
     return request('/auth/logInOrSignUp', { accessToken });
 };
 
+
+export const getListings = async () => {
+    const res = await request('/listings/getListings');
+
+    // console.log(res.length)
+    return res;
+   // return res;
+    
+}
+export const getUser = async (id) => {
+    console.log(id)
+    const res = await request('/users/getUser',  {id});
+    console.log('getting user')
+  
+    return res;
+}
+
 export const postListing = async ({
     title,
     price,
@@ -41,7 +58,8 @@ export const postListing = async ({
     return request('/listings', {
         title, price, type, category, description
     });
-};
+}
+
 
 export const searchListings = async ({
     searchTerm,
@@ -60,3 +78,4 @@ export const searchListings = async ({
 export const startListingSale = async (listingId) => {
     return request(`/listings/${listingId}/startPurchase`, {});
 }
+
